@@ -430,6 +430,12 @@
     }, {
         "Source": "Metacritic",
         "Value": "52/100"
+    },{
+        "Source": "Internet Movie Database",
+        "Value": "5.7/10"
+    },{
+        "Source": "Internet Movie Database",
+        "Value": "5.7/10"
     }],
     "Metascore": "52",
     "imdbRating": "5.7",

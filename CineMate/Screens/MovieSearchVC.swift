@@ -25,7 +25,8 @@ class MovieSearchVC: UIViewController {
     private var tableView: UITableView = {
         var tableView = UITableView()
         tableView.backgroundColor = .systemBackground
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
+        tableView.register(MovieDescriptionCell.self, forCellReuseIdentifier: MovieDescriptionCell.identifier)
+        tableView.register(OptionCell.self, forCellReuseIdentifier: OptionCell.identifier)
         return tableView
     }()
 
@@ -143,7 +144,7 @@ extension MovieSearchVC: UITableViewDataSource, UITableViewDelegate {
         return categories.count
     }
     
-    // Centralizes the logic for determining the cell type in the getCellType(for:) method, making the cellForRowAt implementation more concise.
+    // Centralises the logic for determining the cell type in the getCellType(for:) method, making the cellForRowAt implementation more concise.
     func getCellType(for indexPath: IndexPath) -> CellType {
         guard let movies = self.movies else {
             fatalError("Movies not present")
@@ -208,45 +209,52 @@ extension MovieSearchVC: UITableViewDataSource, UITableViewDelegate {
         let cellType = self.getCellType(for: indexPath)
         switch cellType {
         case .header(let title, let isExpanded, let indentationLevel):
-            let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
-            cell.textLabel?.text = title
-            cell.indentationLevel = indentationLevel
-            let imageView = UIImageView()
-            imageView.frame = CGRect(x: 0, y: 0, width: 10, height: 10)
-            imageView.image = isExpanded ? UIImage(systemName: "chevron.down") : UIImage(systemName: "chevron.right")
-            imageView.tintColor = .gray
-            cell.accessoryView = imageView
-            cell.backgroundColor = .clear
-            return cell
+            let cell = tableView.dequeueReusableCell(withIdentifier: OptionCell.identifier, for: indexPath) as? OptionCell
+            cell?.setup(title: title, indentationLevel: indentationLevel, isExpanded: isExpanded)
+            return cell ?? UITableViewCell()
             
         case .movie(let movie):
-            let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
-            cell.textLabel?.text = movie.title
-            cell.indentationLevel = 2
-            cell.accessoryView = nil
-            cell.backgroundColor = .clear
-            return cell
+            let cell = tableView.dequeueReusableCell(withIdentifier: MovieDescriptionCell.identifier, for: indexPath) as? MovieDescriptionCell
+            cell?.configure(with: movie)
+            return cell ?? UITableViewCell()
         }
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let category = categories[indexPath.section]
-        if indexPath.row == 0 {
-            category.isExpanded.toggle()
-            self.tableView.reloadSections(IndexSet(integer: indexPath.section), with: .automatic)
-        }
-        var currentRow = 1
-        
-        for subcategory in category.subCategories {
-            if currentRow == indexPath.row {
-                subcategory.isExpanded.toggle()
+        let cellType = getCellType(for: indexPath)
+        switch cellType {
+        case .header :
+            let category = categories[indexPath.section]
+            if indexPath.row == 0 {
+                category.isExpanded.toggle()
                 self.tableView.reloadSections(IndexSet(integer: indexPath.section), with: .automatic)
             }
-            currentRow += 1
+            var currentRow = 1
             
-            if subcategory.isExpanded {
-                currentRow += subcategory.movies.count
+            for subcategory in category.subCategories {
+                if currentRow == indexPath.row {
+                    subcategory.isExpanded.toggle()
+                    self.tableView.reloadSections(IndexSet(integer: indexPath.section), with: .automatic)
+                }
+                currentRow += 1
+                
+                if subcategory.isExpanded {
+                    currentRow += subcategory.movies.count
+                }
             }
+        case .movie(let movie):
+            let detailVC = MovieDetailViewController(movie: movie)
+            self.navigationController?.pushViewController(detailVC, animated: true)
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        let cellType = getCellType(for: indexPath)
+        switch cellType {
+        case .header:
+            return 40
+        case .movie:
+            return 220
         }
     }
 }
