@@ -145,10 +145,10 @@ class MovieDetailViewController: UIViewController {
         return label
     }()
 
-    private var movie: Movie
+    var viewModel: MovieDetailsViewModel
     
-    init(movie: Movie) {
-        self.movie = movie
+    init(viewModel: MovieDetailsViewModel) {
+        self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -159,7 +159,7 @@ class MovieDetailViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
-        configureUI(with: self.movie)
+        configureUI()
     }
     
     private func setupUI() {
@@ -272,27 +272,24 @@ class MovieDetailViewController: UIViewController {
         ])
     }
     
-    private func configureUI(with movie: Movie) {
-        titleLabel.text = movie.title
-        releaseDateLabel.text = movie.released
-        genresLabel.text = movie.genre
-        plotLabel.text = movie.plot
-        castLabel.text = movie.actors
-        directorsLabel.text = movie.director
-        NetworkManager.shared.downloadImage(from: movie.poster) { [weak self] image in
-            DispatchQueue.main.async {
-                self?.posterImageView.image = image ?? .placeholder
-            }
+    private func configureUI() {
+        titleLabel.text = viewModel.title
+        releaseDateLabel.text = viewModel.releaseDate
+        genresLabel.text = viewModel.genres
+        plotLabel.text = viewModel.plot
+        castLabel.text = viewModel.cast
+        directorsLabel.text = viewModel.directors
+        viewModel.loadImage { [weak self] image in
+            self?.posterImageView.image = image ?? .placeholder
         }
         
-        setUpRatings(ratings: movie.ratings)
+        self.setUpRatings()
     }
     
-    private func setUpRatings(ratings: [Rating] ) {
+    private func setUpRatings( ) {
         ratingVStack.arrangedSubviews.forEach { $0.removeFromSuperview() }
-                
-        let ratingsView = ratings.compactMap { rating in
-            let ratingDetail = RatingDetails(title: rating.source, percentage: convertRatingToPercentage(ratingString: rating.value) )
+        let ratingDetails = viewModel.getRatingDetails()
+        let ratingViews = ratingDetails.compactMap { ratingDetail in
             let hostingController = UIHostingController(rootView:
                                                             RatingViewUI(rating: ratingDetail)
                 .frame(width: 100, height: 140)
@@ -304,7 +301,7 @@ class MovieDetailViewController: UIViewController {
             return hostingController.view
         }
         
-        let numberOfRows = Int(ceil((Double(ratingsView.count)/3.0)))
+        let numberOfRows = Int(ceil((Double(ratingViews.count)/3.0)))
         let numberOfItemsInColumn = 3
         
         for row in 0..<numberOfRows {
@@ -317,7 +314,7 @@ class MovieDetailViewController: UIViewController {
             for col in 0..<numberOfItemsInColumn {
                 let index = row * 3 + col
                 // Correct the condition to check if index exceeds array size
-                guard index <= ratingsView.count-1 else {
+                guard index <= ratingViews.count-1 else {
                     // Add spacer view to maintain layout if needed
                     let spacerView = UIView()
                     spacerView.translatesAutoresizingMaskIntoConstraints = false
@@ -329,27 +326,10 @@ class MovieDetailViewController: UIViewController {
                     continue
                 }
                 
-                let rating = ratingsView[row*3 + col]
+                let rating = ratingViews[row*3 + col]
                 hstack.addArrangedSubview(rating)
             }
             ratingVStack.addArrangedSubview(hstack)
         }
     }
-    
-    private func convertRatingToPercentage(ratingString: String) -> Double {
-        if ratingString.contains("/") {
-            let components = ratingString.components(separatedBy: "/")
-            if let rating = Double(components[0]),
-               let total = Double(components[1]) {
-                return (rating / total) * 100
-            }
-        } else if ratingString.hasSuffix("%") {
-            let numberString = ratingString.dropLast()
-            if let percentage = Double(numberString) {
-                return percentage
-            }
-        }
-        return 0.0
-    }
-    
 }

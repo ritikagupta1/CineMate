@@ -22,6 +22,7 @@
 		B4FAADA12CD4CBDF00355FFB /* MovieDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4FAADA02CD4CBDF00355FFB /* MovieDetailViewController.swift */; };
 		B4FAADA32CD4DFD100355FFB /* RatingsViewUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4FAADA22CD4DFD100355FFB /* RatingsViewUI.swift */; };
 		B4FAADA92CD6364F00355FFB /* SearchMoviesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4FAADA82CD6364F00355FFB /* SearchMoviesViewModel.swift */; };
+		B4FAADAB2CD6598900355FFB /* MovieDetailsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4FAADAA2CD6598900355FFB /* MovieDetailsViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -42,6 +43,7 @@
 		B4FAADA02CD4CBDF00355FFB /* MovieDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieDetailViewController.swift; sourceTree = "<group>"; };
 		B4FAADA22CD4DFD100355FFB /* RatingsViewUI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RatingsViewUI.swift; sourceTree = "<group>"; };
 		B4FAADA82CD6364F00355FFB /* SearchMoviesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchMoviesViewModel.swift; sourceTree = "<group>"; };
+		B4FAADAA2CD6598900355FFB /* MovieDetailsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieDetailsViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -146,6 +148,7 @@
 			isa = PBXGroup;
 			children = (
 				B4FAADA82CD6364F00355FFB /* SearchMoviesViewModel.swift */,
+				B4FAADAA2CD6598900355FFB /* MovieDetailsViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -220,6 +223,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B4FAADAB2CD6598900355FFB /* MovieDetailsViewModel.swift in Sources */,
 				B4FAAD782CD0C60600355FFB /* MovieSearchVC.swift in Sources */,
 				B4FAAD942CD0E8B600355FFB /* ExpandableCategories.swift in Sources */,
 				B4FAAD9D2CD4BD2100355FFB /* NetworkManager.swift in Sources */,
