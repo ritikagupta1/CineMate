@@ -6,22 +6,41 @@
 //
 
 import Foundation
-protocol SearchViewModelProtocol: AnyObject {
+protocol SearchViewModelDelegate: AnyObject {
     func toggleSectionExpansion(at index: Int)
 }
 
-class SearchMoviesViewModel {
-    private var movies: [Movie]?
+protocol SearchViewModelProtocol: AnyObject {
+    var movies: [Movie]? {get}
+    var categories: [ExpandableCategories] {get}
+    var delegate: SearchViewModelDelegate? {get set}
+    
+    func loadMovies()
+    func numberOfSections() -> Int
+    func getCellType(for indexPath: IndexPath) -> CellType
+    func numberOfRowsInSection(_ section: Int) -> Int
+    func heightForRow(_ indexPath: IndexPath) -> Double
+    func toggleCategory(indexPath: IndexPath)
+    func updateSearchResults(with query: String)
+}
+
+
+class SearchMoviesViewModel: SearchViewModelProtocol {
+    private(set) var movies: [Movie]?
     // Filtered Movies
     private var yearMovies: [String: [Movie]] = [:]
     private var actorMovies: [String: [Movie]] = [:]
     private var directorMovies: [String: [Movie]] = [:]
     private var genreMovies: [String: [Movie]] = [:]
     
-    private var categories: [ExpandableCategories] = []
+    private(set) var categories: [ExpandableCategories] = []
     
-    weak var delegate: SearchViewModelProtocol?
     
+    weak var delegate: SearchViewModelDelegate?
+    
+    
+    var isSearchActive: Bool = false
+    private var searchResults: [Movie] = []
     
     func loadMovies() {
         // Load movies from json file in the bundle
@@ -111,13 +130,16 @@ class SearchMoviesViewModel {
     }
     
     func numberOfSections() -> Int {
-        return categories.count
+        isSearchActive ? 1 : categories.count
     }
     
     // Centralises the logic for determining the cell type in the getCellType(for:) method, making the cellForRowAt implementation more concise.
     func getCellType(for indexPath: IndexPath) -> CellType {
         guard let movies = self.movies else {
             fatalError("Movies not present")
+        }
+        if isSearchActive {
+            return .movie(movie: searchResults[indexPath.row])
         }
         
         let category = categories[indexPath.section]
@@ -151,6 +173,10 @@ class SearchMoviesViewModel {
     func numberOfRowsInSection(_ section: Int) -> Int {
         guard let movies = movies else {
             fatalError("Movies not found")
+        }
+        
+        if isSearchActive {
+            return searchResults.count
         }
         
         let category = categories[section]
@@ -207,6 +233,20 @@ class SearchMoviesViewModel {
         }
     }
     
+    func updateSearchResults(with query: String) {
+        guard let movies = movies else {
+            print("Movies not present")
+            return
+        }
+        
+        isSearchActive = !query.isEmpty
+        searchResults = movies.filter { movie in
+            movie.title.lowercased().contains(query.lowercased()) ||
+            movie.actorCollection.contains(where: { $0.lowercased().contains(query)}) ||
+            movie.directorCollection.contains(where: { $0.lowercased().contains(query)}) ||
+            movie.genreCollection.contains(where: { $0.lowercased().contains(query)})
+        }
+    }
 }
 
 enum CellType {

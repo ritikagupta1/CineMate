@@ -6,7 +6,7 @@
 //
 
 import UIKit
-class MovieSearchVC: UIViewController {
+class MovieSearchVC: UIViewController, UISearchBarDelegate {
     var viewModel: SearchMoviesViewModel
     
     private var tableView: UITableView = {
@@ -32,6 +32,7 @@ class MovieSearchVC: UIViewController {
         viewModel.loadMovies()
         configureVC()
         configureTableView()
+        configureSearchController()
     }
     
     private func configureVC() {
@@ -45,6 +46,14 @@ class MovieSearchVC: UIViewController {
         self.tableView.delegate = self
         self.view.addSubview(tableView)
         tableView.frame = view.bounds
+    }
+    
+    func configureSearchController() {
+        let searchController = UISearchController()
+        searchController.searchResultsUpdater = self
+        searchController.searchBar.placeholder = Constants.searchBarPlaceHolder
+        navigationItem.searchController = searchController
+        navigationItem.hidesSearchBarWhenScrolling = false
     }
 }
 
@@ -88,8 +97,18 @@ extension MovieSearchVC: UITableViewDataSource, UITableViewDelegate {
     }
 }
 
-extension MovieSearchVC: SearchViewModelProtocol {
+extension MovieSearchVC: SearchViewModelDelegate {
     func toggleSectionExpansion(at index: Int) {
         self.tableView.reloadSections(IndexSet(integer: index), with: .automatic)
+    }
+}
+
+extension MovieSearchVC: UISearchResultsUpdating {
+    func updateSearchResults(for searchController: UISearchController) {
+        guard let query = searchController.searchBar.text else {
+            return
+        }
+        viewModel.updateSearchResults(with: query)
+        self.tableView.reloadData()
     }
 }
