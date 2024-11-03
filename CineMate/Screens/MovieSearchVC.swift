@@ -67,13 +67,18 @@ extension MovieSearchVC: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cellType = viewModel.getCellType(for: indexPath)
-        switch cellType {
-        case .header(let title, let isExpanded, let indentationLevel):
+        let rowType = viewModel.getRowType(for: indexPath)
+        switch rowType {
+        case .category(let title, let isExpanded):
             let cell = tableView.dequeueReusableCell(withIdentifier: OptionCell.identifier, for: indexPath) as? OptionCell
-            cell?.setup(title: title, indentationLevel: indentationLevel, isExpanded: isExpanded)
+            cell?.setup(title: title, indentationLevel: 0, isExpanded: isExpanded)
             return cell ?? UITableViewCell()
-            
+        
+        case .subcategory(let subcategory):
+            let cell = tableView.dequeueReusableCell(withIdentifier: OptionCell.identifier, for: indexPath) as? OptionCell
+            cell?.setup(title: subcategory.title, indentationLevel: 1, isExpanded: subcategory.isExpanded)
+            return cell ?? UITableViewCell()
+        
         case .movie(let movie):
             let cell = tableView.dequeueReusableCell(withIdentifier: MovieDescriptionCell.identifier, for: indexPath) as? MovieDescriptionCell
             cell?.configure(with: movie)
@@ -82,9 +87,10 @@ extension MovieSearchVC: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let cellType = viewModel.getCellType(for: indexPath)
-        switch cellType {
-        case .header :
+        self.tableView.deselectRow(at: indexPath, animated: true)
+        let rowType = viewModel.getRowType(for: indexPath)
+        switch rowType {
+        case .category, .subcategory :
             self.viewModel.toggleCategory(indexPath: indexPath)
         case .movie(let movie):
             let detailVC = MovieDetailViewController(viewModel: MovieDetailsViewModel(movie: movie))

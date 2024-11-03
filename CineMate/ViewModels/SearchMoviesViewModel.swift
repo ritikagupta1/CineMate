@@ -17,7 +17,7 @@ protocol SearchViewModelProtocol: AnyObject {
     
     func loadMovies()
     func numberOfSections() -> Int
-    func getCellType(for indexPath: IndexPath) -> CellType
+//    func getCellType(for indexPath: IndexPath) -> CellType
     func numberOfRowsInSection(_ section: Int) -> Int
     func heightForRow(_ indexPath: IndexPath) -> Double
     func toggleCategory(indexPath: IndexPath)
@@ -34,10 +34,9 @@ class SearchMoviesViewModel: SearchViewModelProtocol {
     private var genreMovies: [String: [Movie]] = [:]
     
     private(set) var categories: [ExpandableCategories] = []
-    
+    private(set) var rows: [[RowType]] = []
     
     weak var delegate: SearchViewModelDelegate?
-    
     
     var isSearchActive: Bool = false
     private var searchResults: [Movie] = []
@@ -56,6 +55,7 @@ class SearchMoviesViewModel: SearchViewModelProtocol {
         self.movies = movies
         self.filterMovies(movies: movies)
         self.configureDataSource()
+        self.initialiseRows()
     }
     
     private func filterMovies(movies: [Movie]) {
@@ -129,85 +129,62 @@ class SearchMoviesViewModel: SearchViewModelProtocol {
         })
     }
     
-    func numberOfSections() -> Int {
-        isSearchActive ? 1 : categories.count
+    func initialiseRows() {
+        self.rows = categories.map { category in
+            [.category(title: category.title, isExpanded: category.isExpanded)]
+        }
     }
     
-    // Centralises the logic for determining the cell type in the getCellType(for:) method, making the cellForRowAt implementation more concise.
-    func getCellType(for indexPath: IndexPath) -> CellType {
-        guard let movies = self.movies else {
-            fatalError("Movies not present")
-        }
-        if isSearchActive {
-            return .movie(movie: searchResults[indexPath.row])
-        }
-        
-        let category = categories[indexPath.section]
-        if indexPath.row == 0 {
-            return .header(title: category.title, isExpanded: category.isExpanded, indentationLevel: 0)
-        }
-        if indexPath.section == MovieCategories.all.rawValue {
-            return .movie(movie: movies[indexPath.row - 1 ])
-        }
-        
-        var currentRow = 1
-        for subcategory in category.subCategories {
-            if indexPath.row == currentRow {
-                return .header(title: subcategory.title, isExpanded: subcategory.isExpanded, indentationLevel: 1)
-            }
-            currentRow += 1
-            
-            let startIndex = currentRow
-            let endIndex = startIndex + subcategory.movies.count - 1
-            if subcategory.isExpanded {
-                if indexPath.row >= startIndex && indexPath.row <= endIndex {
-                    return .movie(movie: subcategory.movies[indexPath.row - startIndex])
-                }
-                currentRow += subcategory.movies.count
-            }
-            
-        }
-        fatalError("Invalid index path: \(indexPath)")
+    func numberOfSections() -> Int {
+        isSearchActive ? 1 : rows.count
     }
     
     func numberOfRowsInSection(_ section: Int) -> Int {
-        guard let movies = movies else {
-            fatalError("Movies not found")
-        }
-        
-        if isSearchActive {
-            return searchResults.count
-        }
-        
-        let category = categories[section]
-        
-        if section == MovieCategories.all.rawValue {
-            return category.isExpanded ? movies.count+1 : 1
-        }
-        
-        if !category.isExpanded {
-            return 1
-        } else {
-            var count = 1
-            for subcategory in category.subCategories {
-                count += 1
-                if subcategory.isExpanded {
-                    for _ in subcategory.movies {
-                        count += 1
-                    }
-                }
-            }
-            return count
-        }
+        return isSearchActive ? searchResults.count : rows[section].count
     }
     
     func heightForRow(_ indexPath: IndexPath) -> Double {
-        let cellType = getCellType(for: indexPath)
-        switch cellType {
-        case .header:
+        let rowType = getRowType(for: indexPath)
+        switch rowType {
+        case .category:
+            return 40
+        case .subcategory:
             return 40
         case .movie:
-            return 220
+            return 240
+        }
+    }
+    
+    func updateRows() {
+        self.rows = categories.map { category in
+            guard let movies = movies else {
+                print("Movies not present")
+                return []
+            }
+            
+            var row: [RowType] = [.category(title: category.title, isExpanded: category.isExpanded)]
+            
+            if !category.isExpanded {
+               return row
+            }
+            
+            if category.title == MovieCategories.all.title{
+                for movie in movies {
+                    row.append(.movie(movie: movie))
+                }
+                return row
+            }
+            
+            for subCategory in category.subCategories {
+                row.append(.subcategory(subcategory: subCategory))
+                
+                if subCategory.isExpanded {
+                    for movie in subCategory.movies {
+                        row.append(.movie(movie: movie))
+                    }
+                }
+            }
+            return row
         }
     }
     
@@ -216,6 +193,7 @@ class SearchMoviesViewModel: SearchViewModelProtocol {
         let category = categories[indexPath.section]
         if indexPath.row == 0 {
             category.isExpanded.toggle()
+            self.updateRows()
             delegate?.toggleSectionExpansion(at: indexPath.section)
         }
         var currentRow = 1
@@ -223,6 +201,7 @@ class SearchMoviesViewModel: SearchViewModelProtocol {
         for subcategory in category.subCategories {
             if currentRow == indexPath.row {
                 subcategory.isExpanded.toggle()
+                self.updateRows()
                 delegate?.toggleSectionExpansion(at: indexPath.section)
             }
             currentRow += 1
@@ -247,9 +226,16 @@ class SearchMoviesViewModel: SearchViewModelProtocol {
             movie.genreCollection.contains(where: { $0.lowercased().contains(query)})
         }
     }
+    
+    func getRowType(for indexPath: IndexPath) -> RowType {
+        isSearchActive ? RowType.movie(movie: searchResults[indexPath.row]) :
+        rows[indexPath.section][indexPath.row]
+    }
 }
 
-enum CellType {
-    case header(title: String, isExpanded: Bool, indentationLevel: Int)
+
+enum RowType {
+    case category(title: String, isExpanded: Bool)
+    case subcategory(subcategory: SubCategories)
     case movie(movie: Movie)
 }
