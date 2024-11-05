@@ -75,7 +75,7 @@ class MovieSearchVC: UIViewController, UISearchBarDelegate {
             
             tableView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
             tableView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
-            tableView.topAnchor.constraint(equalTo: self.segmentControl.bottomAnchor, constant: 5),
+            tableView.topAnchor.constraint(equalTo: self.segmentControl.bottomAnchor, constant: 15),
             tableView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor)
         ])
     }
@@ -131,7 +131,7 @@ extension MovieSearchVC: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        viewModel.heightForRow(indexPath)
+        UITableView.automaticDimension
     }
 }
 

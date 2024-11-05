@@ -18,7 +18,6 @@ protocol SearchViewModelProtocol: AnyObject {
     func loadMovies()
     func numberOfSections() -> Int
     func numberOfRowsInSection(_ section: Int) -> Int
-    func heightForRow(_ indexPath: IndexPath) -> Double
     func toggleCategory(indexPath: IndexPath)
     func updateSearchResults(with query: String)
 }
@@ -162,19 +161,7 @@ class SearchMoviesViewModel: SearchViewModelProtocol {
     func numberOfRowsInSection(_ section: Int) -> Int {
         return isSearchActive ? searchResults.count : rows[section].count
     }
-    
-    func heightForRow(_ indexPath: IndexPath) -> Double {
-        let rowType = getRowType(for: indexPath)
-        switch rowType {
-        case .category:
-            return 40
-        case .subcategory:
-            return 40
-        case .movie:
-            return 240
-        }
-    }
-    
+
     func updateRows() {
         self.rows = categories.map { category in
             guard let movies = movies else {

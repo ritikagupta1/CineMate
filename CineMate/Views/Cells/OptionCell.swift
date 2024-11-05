@@ -28,7 +28,8 @@ class OptionCell: UITableViewCell {
         NSLayoutConstraint.activate([
             titleLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 10),
             titleLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -10),
-            titleLabel.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
+            titleLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 10),
+            titleLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -10)
         ])
     }
     
