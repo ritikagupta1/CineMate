@@ -10,7 +10,7 @@ import Foundation
 class ExpandableCategories {
     let title: String
     var isExpanded: Bool
-    let subCategories: [SubCategories]
+    var subCategories: [SubCategories]
     
     init(title: String, isExpanded: Bool, subCategories: [SubCategories]) {
         self.title = title
@@ -22,7 +22,7 @@ class ExpandableCategories {
 class SubCategories {
     let title: String
     var isExpanded: Bool
-    let movies: [Movie]
+    var movies: [Movie]
     
     init(title: String, isExpanded: Bool, movies: [Movie]) {
         self.title = title

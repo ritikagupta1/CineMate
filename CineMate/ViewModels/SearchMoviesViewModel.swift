@@ -17,7 +17,6 @@ protocol SearchViewModelProtocol: AnyObject {
     
     func loadMovies()
     func numberOfSections() -> Int
-//    func getCellType(for indexPath: IndexPath) -> CellType
     func numberOfRowsInSection(_ section: Int) -> Int
     func heightForRow(_ indexPath: IndexPath) -> Double
     func toggleCategory(indexPath: IndexPath)
@@ -37,6 +36,8 @@ class SearchMoviesViewModel: SearchViewModelProtocol {
     private(set) var rows: [[RowType]] = []
     
     weak var delegate: SearchViewModelDelegate?
+    
+    private(set) var currentSortOrder: Filters = .ascending
     
     var isSearchActive: Bool = false
     private var searchResults: [Movie] = []
@@ -108,25 +109,44 @@ class SearchMoviesViewModel: SearchViewModelProtocol {
             switch category {
             case .year:
                 options = yearMovies.map({
-                    SubCategories(title: $0.key, isExpanded: false, movies: $0.value)
+                    SubCategories(title: $0.key, isExpanded: false, movies: $0.value.sorted(by: { $0.title < $1.title }))
                 }).sorted(by: { $0.title < $1.title })
             case .genre:
                 options = genreMovies.map({
-                    SubCategories(title: $0.key, isExpanded: false, movies: $0.value)
+                    SubCategories(title: $0.key, isExpanded: false, movies: $0.value.sorted(by: { $0.title < $1.title }))
                 }).sorted(by: { $0.title < $1.title })
             case .director:
                 options = directorMovies.map({
-                    SubCategories(title: $0.key, isExpanded: false, movies: $0.value)
+                    SubCategories(title: $0.key, isExpanded: false, movies: $0.value.sorted(by: { $0.title < $1.title }))
                 }).sorted(by: { $0.title < $1.title })
             case .actor:
                 options = actorMovies.map({
-                    SubCategories(title: $0.key, isExpanded: false, movies: $0.value)
+                    SubCategories(title: $0.key, isExpanded: false, movies: $0.value.sorted(by: { $0.title < $1.title }))
                 }).sorted(by: { $0.title < $1.title })
             case .all:
-                break
+                self.movies = self.movies?.sorted(by: { $0.title < $1.title })
             }
             return ExpandableCategories(title: category.title, isExpanded: false, subCategories: options)
         })
+    }
+    
+    func sort(filter: Filters) {
+        guard filter != currentSortOrder || !categories.isEmpty else { return }
+        self.currentSortOrder = filter
+        self.categories = self.categories.map { category in
+            category.subCategories = category.subCategories.sorted(by: { filter == .ascending ? $0.title < $1.title : $0.title > $1.title
+            })
+            for subCategory in category.subCategories {
+                subCategory.movies = subCategory.movies.sorted(by: { filter == .ascending ? $0.title < $1.title : $0.title > $1.title
+                })
+            }
+            return category
+        }
+        self.movies = self.movies?.sorted(by: { filter == .ascending ? $0.title < $1.title : $0.title > $1.title
+        })
+        self.searchResults = self.searchResults.sorted(by: { filter == .ascending ? $0.title < $1.title : $0.title > $1.title
+        })
+        self.updateRows()
     }
     
     func initialiseRows() {
@@ -224,7 +244,7 @@ class SearchMoviesViewModel: SearchViewModelProtocol {
             movie.actorCollection.contains(where: { $0.lowercased().contains(query)}) ||
             movie.directorCollection.contains(where: { $0.lowercased().contains(query)}) ||
             movie.genreCollection.contains(where: { $0.lowercased().contains(query)})
-        }
+        }.sorted(by: { currentSortOrder == .ascending ? $0.title < $1.title : $0.title > $1.title })
     }
     
     func getRowType(for indexPath: IndexPath) -> RowType {

@@ -17,6 +17,12 @@ class MovieSearchVC: UIViewController, UISearchBarDelegate {
         return tableView
     }()
     
+    private var segmentControl: UISegmentedControl = {
+        let segmentControl = UISegmentedControl(items: [Filters.ascending.rawValue, Filters.descending.rawValue])
+        segmentControl.selectedSegmentIndex = 0
+        return segmentControl
+    }()
+    
     init(viewModel: SearchMoviesViewModel) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
@@ -40,12 +46,38 @@ class MovieSearchVC: UIViewController, UISearchBarDelegate {
         self.title = "Search Movies"
     }
     
+    @objc func segmentControlClicked(_ sender: UISegmentedControl) {
+        let selectedIndex = sender.selectedSegmentIndex
+        if selectedIndex == 0 {
+            viewModel.sort(filter: .ascending)
+        } else {
+            viewModel.sort(filter: .descending)
+        }
+        
+        self.tableView.reloadData()
+    }
+    
     private func configureTableView() {
+        segmentControl.addTarget(self, action: #selector(segmentControlClicked(_:)), for: .valueChanged)
         self.tableView.backgroundColor = .systemBackground
         self.tableView.dataSource = self
         self.tableView.delegate = self
+        segmentControl.translatesAutoresizingMaskIntoConstraints = false
+        self.tableView.translatesAutoresizingMaskIntoConstraints = false
+        self.view.addSubview(segmentControl)
         self.view.addSubview(tableView)
-        tableView.frame = view.bounds
+        
+        NSLayoutConstraint.activate([
+            segmentControl.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor, constant: 10),
+            segmentControl.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 10),
+            segmentControl.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -10),
+            segmentControl.heightAnchor.constraint(equalToConstant: 30),
+            
+            tableView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
+            tableView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
+            tableView.topAnchor.constraint(equalTo: self.segmentControl.bottomAnchor, constant: 5),
+            tableView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor)
+        ])
     }
     
     func configureSearchController() {
@@ -117,4 +149,10 @@ extension MovieSearchVC: UISearchResultsUpdating {
         viewModel.updateSearchResults(with: query)
         self.tableView.reloadData()
     }
+}
+
+
+enum Filters: String {
+    case ascending = "Ascending"
+    case descending = "Descending"
 }
