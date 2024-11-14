@@ -16,6 +16,11 @@ enum Constants {
     static let searchBarPlaceHolder = "Search movies by title/actor/genre/director"
     static let searchControllerTitle = "Search Movies"
     
+    static let year = "Year"
+    static let genre = "Genre"
+    static let actor = "Actor"
+    static let allMovies = "All Movies"
+   
     enum Fonts {
         static let gothicRegular = "AppleSDGothicNeo-Regular"
         static let gothicBold =  "AppleSDGothicNeo-Bold"

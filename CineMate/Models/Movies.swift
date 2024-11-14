@@ -21,15 +21,15 @@ struct Movie: Codable {
     let ratings: [Rating]
     
     var genreCollection: [String] {
-        genre.components(separatedBy: ",")
+        genre.components(separatedBy: ",").map { $0.trimmingCharacters(in: .whitespaces) }
     }
     
     var directorCollection: [String] {
-        director.components(separatedBy: ",")
+        director.components(separatedBy: ",").map { $0.trimmingCharacters(in: .whitespaces) }
     }
     
     var actorCollection: [String] {
-        actors.components(separatedBy: ",")
+        actors.components(separatedBy: ",").map { $0.trimmingCharacters(in: .whitespaces) }
     }
     
     enum CodingKeys: String, CodingKey {

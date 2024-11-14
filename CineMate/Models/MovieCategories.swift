@@ -17,15 +17,15 @@ enum MovieCategories: Int, CaseIterable {
     var title: String {
         switch self {
         case .year:
-            return "Year"
+            return Constants.year
         case .genre:
-            return "Genre"
+            return Constants.genre
         case .actor:
-            return "Actor"
+            return Constants.actor
         case .director:
-            return "Director"
+            return Constants.director
         case .all:
-            return "All Movies"
+            return Constants.allMovies
         }
     }
 }

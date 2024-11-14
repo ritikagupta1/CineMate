@@ -8,6 +8,10 @@
 
 /* Begin PBXBuildFile section */
 		B4F32C8E2CE5E0BD00DF82C9 /* RatingsViewUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4F32C8D2CE5E0BD00DF82C9 /* RatingsViewUI.swift */; };
+		B4F32C962CE5E16500DF82C9 /* MovieModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4F32C952CE5E16500DF82C9 /* MovieModelTests.swift */; };
+		B4F32C9D2CE5FBC300DF82C9 /* MovieCategoriesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4F32C9C2CE5FBC300DF82C9 /* MovieCategoriesTests.swift */; };
+		B4F32C9F2CE5FDB500DF82C9 /* ExpandableCategoriesTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4F32C9E2CE5FDB500DF82C9 /* ExpandableCategoriesTestCase.swift */; };
+		B4F32CA22CE6003D00DF82C9 /* SearchMoviesViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4F32CA12CE6003D00DF82C9 /* SearchMoviesViewControllerTests.swift */; };
 		B4FAAD742CD0C60600355FFB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4FAAD732CD0C60600355FFB /* AppDelegate.swift */; };
 		B4FAAD762CD0C60600355FFB /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4FAAD752CD0C60600355FFB /* SceneDelegate.swift */; };
 		B4FAAD782CD0C60600355FFB /* MovieSearchVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4FAAD772CD0C60600355FFB /* MovieSearchVC.swift */; };
@@ -25,8 +29,23 @@
 		B4FAADAB2CD6598900355FFB /* MovieDetailsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4FAADAA2CD6598900355FFB /* MovieDetailsViewModel.swift */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		B4F32C972CE5E16500DF82C9 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = B4FAAD682CD0C60500355FFB /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = B4FAAD6F2CD0C60600355FFB;
+			remoteInfo = CineMate;
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
 		B4F32C8D2CE5E0BD00DF82C9 /* RatingsViewUI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RatingsViewUI.swift; sourceTree = "<group>"; };
+		B4F32C932CE5E16500DF82C9 /* CineMateTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CineMateTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		B4F32C952CE5E16500DF82C9 /* MovieModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieModelTests.swift; sourceTree = "<group>"; };
+		B4F32C9C2CE5FBC300DF82C9 /* MovieCategoriesTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieCategoriesTests.swift; sourceTree = "<group>"; };
+		B4F32C9E2CE5FDB500DF82C9 /* ExpandableCategoriesTestCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpandableCategoriesTestCase.swift; sourceTree = "<group>"; };
+		B4F32CA12CE6003D00DF82C9 /* SearchMoviesViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchMoviesViewControllerTests.swift; sourceTree = "<group>"; };
 		B4FAAD702CD0C60600355FFB /* CineMate.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CineMate.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B4FAAD732CD0C60600355FFB /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B4FAAD752CD0C60600355FFB /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -47,6 +66,13 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		B4F32C902CE5E16500DF82C9 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		B4FAAD6D2CD0C60600355FFB /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -66,10 +92,30 @@
 			path = CineMate/Views/SwiftUIViews;
 			sourceTree = SOURCE_ROOT;
 		};
+		B4F32C942CE5E16500DF82C9 /* CineMateTests */ = {
+			isa = PBXGroup;
+			children = (
+				B4F32CA02CE6000700DF82C9 /* ModelTests */,
+				B4F32CA12CE6003D00DF82C9 /* SearchMoviesViewControllerTests.swift */,
+			);
+			path = CineMateTests;
+			sourceTree = "<group>";
+		};
+		B4F32CA02CE6000700DF82C9 /* ModelTests */ = {
+			isa = PBXGroup;
+			children = (
+				B4F32C9C2CE5FBC300DF82C9 /* MovieCategoriesTests.swift */,
+				B4F32C952CE5E16500DF82C9 /* MovieModelTests.swift */,
+				B4F32C9E2CE5FDB500DF82C9 /* ExpandableCategoriesTestCase.swift */,
+			);
+			path = ModelTests;
+			sourceTree = "<group>";
+		};
 		B4FAAD672CD0C60500355FFB = {
 			isa = PBXGroup;
 			children = (
 				B4FAAD722CD0C60600355FFB /* CineMate */,
+				B4F32C942CE5E16500DF82C9 /* CineMateTests */,
 				B4FAAD712CD0C60600355FFB /* Products */,
 			);
 			sourceTree = "<group>";
@@ -78,6 +124,7 @@
 			isa = PBXGroup;
 			children = (
 				B4FAAD702CD0C60600355FFB /* CineMate.app */,
+				B4F32C932CE5E16500DF82C9 /* CineMateTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -165,6 +212,24 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		B4F32C922CE5E16500DF82C9 /* CineMateTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = B4F32C992CE5E16500DF82C9 /* Build configuration list for PBXNativeTarget "CineMateTests" */;
+			buildPhases = (
+				B4F32C8F2CE5E16500DF82C9 /* Sources */,
+				B4F32C902CE5E16500DF82C9 /* Frameworks */,
+				B4F32C912CE5E16500DF82C9 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				B4F32C982CE5E16500DF82C9 /* PBXTargetDependency */,
+			);
+			name = CineMateTests;
+			productName = CineMateTests;
+			productReference = B4F32C932CE5E16500DF82C9 /* CineMateTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		B4FAAD6F2CD0C60600355FFB /* CineMate */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = B4FAAD842CD0C60900355FFB /* Build configuration list for PBXNativeTarget "CineMate" */;
@@ -192,6 +257,10 @@
 				LastSwiftUpdateCheck = 1540;
 				LastUpgradeCheck = 1540;
 				TargetAttributes = {
+					B4F32C922CE5E16500DF82C9 = {
+						CreatedOnToolsVersion = 15.4;
+						TestTargetID = B4FAAD6F2CD0C60600355FFB;
+					};
 					B4FAAD6F2CD0C60600355FFB = {
 						CreatedOnToolsVersion = 15.4;
 					};
@@ -211,11 +280,19 @@
 			projectRoot = "";
 			targets = (
 				B4FAAD6F2CD0C60600355FFB /* CineMate */,
+				B4F32C922CE5E16500DF82C9 /* CineMateTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		B4F32C912CE5E16500DF82C9 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		B4FAAD6E2CD0C60600355FFB /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -228,6 +305,17 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		B4F32C8F2CE5E16500DF82C9 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B4F32C9D2CE5FBC300DF82C9 /* MovieCategoriesTests.swift in Sources */,
+				B4F32C962CE5E16500DF82C9 /* MovieModelTests.swift in Sources */,
+				B4F32C9F2CE5FDB500DF82C9 /* ExpandableCategoriesTestCase.swift in Sources */,
+				B4F32CA22CE6003D00DF82C9 /* SearchMoviesViewControllerTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		B4FAAD6C2CD0C60600355FFB /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -251,7 +339,51 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXTargetDependency section */
+		B4F32C982CE5E16500DF82C9 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = B4FAAD6F2CD0C60600355FFB /* CineMate */;
+			targetProxy = B4F32C972CE5E16500DF82C9 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
 /* Begin XCBuildConfiguration section */
+		B4F32C9A2CE5E16500DF82C9 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = WBT765N7KM;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.ritika.CineMateTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/CineMate.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/CineMate";
+			};
+			name = Debug;
+		};
+		B4F32C9B2CE5E16500DF82C9 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = WBT765N7KM;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.ritika.CineMateTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/CineMate.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/CineMate";
+			};
+			name = Release;
+		};
 		B4FAAD822CD0C60900355FFB /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -426,6 +558,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		B4F32C992CE5E16500DF82C9 /* Build configuration list for PBXNativeTarget "CineMateTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B4F32C9A2CE5E16500DF82C9 /* Debug */,
+				B4F32C9B2CE5E16500DF82C9 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		B4FAAD6B2CD0C60500355FFB /* Build configuration list for PBXProject "CineMate" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
