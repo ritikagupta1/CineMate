@@ -11,8 +11,6 @@ protocol SearchViewModelDelegate: AnyObject {
 }
 
 protocol SearchViewModelProtocol: AnyObject {
-    var movies: [Movie]? {get}
-    var categories: [ExpandableCategories] {get}
     var delegate: SearchViewModelDelegate? {get set}
     
     func loadMovies()
@@ -20,6 +18,8 @@ protocol SearchViewModelProtocol: AnyObject {
     func numberOfRowsInSection(_ section: Int) -> Int
     func toggleCategory(indexPath: IndexPath)
     func updateSearchResults(with query: String)
+    func sort(filter: Filters)
+    func getRowType(for indexPath: IndexPath) -> RowType
 }
 
 
@@ -39,8 +39,8 @@ class SearchMoviesViewModel: SearchViewModelProtocol {
     
     private(set) var currentSortOrder: Filters = .ascending
     
-    private var isSearchActive: Bool = false
-    private var searchResults: [Movie] = []
+    var isSearchActive: Bool = false
+    var searchResults: [Movie] = []
     
     func loadMovies() {
         // Load movies from json file in the bundle

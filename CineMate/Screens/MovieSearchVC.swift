@@ -7,9 +7,9 @@
 
 import UIKit
 class MovieSearchVC: UIViewController, UISearchBarDelegate {
-    var viewModel: SearchMoviesViewModel
+    let viewModel: SearchViewModelProtocol
     
-    var tableView: UITableView = {
+    let tableView: UITableView = {
         var tableView = UITableView()
         tableView.backgroundColor = .systemBackground
         tableView.register(MovieDescriptionCell.self, forCellReuseIdentifier: MovieDescriptionCell.identifier)
@@ -17,13 +17,13 @@ class MovieSearchVC: UIViewController, UISearchBarDelegate {
         return tableView
     }()
     
-    private var segmentControl: UISegmentedControl = {
+    let segmentControl: UISegmentedControl = {
         let segmentControl = UISegmentedControl(items: [Filters.ascending.rawValue, Filters.descending.rawValue])
         segmentControl.selectedSegmentIndex = 0
         return segmentControl
     }()
     
-    init(viewModel: SearchMoviesViewModel) {
+    init(viewModel: SearchViewModelProtocol) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
         viewModel.delegate = self

@@ -53,4 +53,15 @@ final class ExpandableCategoriesTestCase: XCTestCase {
         
         XCTAssertFalse(subCategory.isExpanded)
     }
+    
+    func test_rowType_initialisation() {
+        let rowType = RowType.category(title: "Hello America", isExpanded: false)
+        switch rowType {
+        case .category(let title, let isExpanded):
+            XCTAssertEqual(title, "Hello America")
+            XCTAssertFalse(isExpanded)
+        default:
+            XCTFail()
+        }
+    }
 }

@@ -12,6 +12,7 @@
 		B4F32C9D2CE5FBC300DF82C9 /* MovieCategoriesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4F32C9C2CE5FBC300DF82C9 /* MovieCategoriesTests.swift */; };
 		B4F32C9F2CE5FDB500DF82C9 /* ExpandableCategoriesTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4F32C9E2CE5FDB500DF82C9 /* ExpandableCategoriesTestCase.swift */; };
 		B4F32CA22CE6003D00DF82C9 /* SearchMoviesViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4F32CA12CE6003D00DF82C9 /* SearchMoviesViewControllerTests.swift */; };
+		B4F32CA62CE6313100DF82C9 /* SearchViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4F32CA52CE6313100DF82C9 /* SearchViewModelTests.swift */; };
 		B4FAAD742CD0C60600355FFB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4FAAD732CD0C60600355FFB /* AppDelegate.swift */; };
 		B4FAAD762CD0C60600355FFB /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4FAAD752CD0C60600355FFB /* SceneDelegate.swift */; };
 		B4FAAD782CD0C60600355FFB /* MovieSearchVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4FAAD772CD0C60600355FFB /* MovieSearchVC.swift */; };
@@ -46,6 +47,7 @@
 		B4F32C9C2CE5FBC300DF82C9 /* MovieCategoriesTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieCategoriesTests.swift; sourceTree = "<group>"; };
 		B4F32C9E2CE5FDB500DF82C9 /* ExpandableCategoriesTestCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpandableCategoriesTestCase.swift; sourceTree = "<group>"; };
 		B4F32CA12CE6003D00DF82C9 /* SearchMoviesViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchMoviesViewControllerTests.swift; sourceTree = "<group>"; };
+		B4F32CA52CE6313100DF82C9 /* SearchViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewModelTests.swift; sourceTree = "<group>"; };
 		B4FAAD702CD0C60600355FFB /* CineMate.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CineMate.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B4FAAD732CD0C60600355FFB /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B4FAAD752CD0C60600355FFB /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -95,8 +97,9 @@
 		B4F32C942CE5E16500DF82C9 /* CineMateTests */ = {
 			isa = PBXGroup;
 			children = (
+				B4F32CA42CE6311F00DF82C9 /* ViewModelTests */,
+				B4F32CA32CE6311300DF82C9 /* ViewTests */,
 				B4F32CA02CE6000700DF82C9 /* ModelTests */,
-				B4F32CA12CE6003D00DF82C9 /* SearchMoviesViewControllerTests.swift */,
 			);
 			path = CineMateTests;
 			sourceTree = "<group>";
@@ -104,11 +107,27 @@
 		B4F32CA02CE6000700DF82C9 /* ModelTests */ = {
 			isa = PBXGroup;
 			children = (
-				B4F32C9C2CE5FBC300DF82C9 /* MovieCategoriesTests.swift */,
 				B4F32C952CE5E16500DF82C9 /* MovieModelTests.swift */,
+				B4F32C9C2CE5FBC300DF82C9 /* MovieCategoriesTests.swift */,
 				B4F32C9E2CE5FDB500DF82C9 /* ExpandableCategoriesTestCase.swift */,
 			);
 			path = ModelTests;
+			sourceTree = "<group>";
+		};
+		B4F32CA32CE6311300DF82C9 /* ViewTests */ = {
+			isa = PBXGroup;
+			children = (
+				B4F32CA12CE6003D00DF82C9 /* SearchMoviesViewControllerTests.swift */,
+			);
+			path = ViewTests;
+			sourceTree = "<group>";
+		};
+		B4F32CA42CE6311F00DF82C9 /* ViewModelTests */ = {
+			isa = PBXGroup;
+			children = (
+				B4F32CA52CE6313100DF82C9 /* SearchViewModelTests.swift */,
+			);
+			path = ViewModelTests;
 			sourceTree = "<group>";
 		};
 		B4FAAD672CD0C60500355FFB = {
@@ -313,6 +332,7 @@
 				B4F32C962CE5E16500DF82C9 /* MovieModelTests.swift in Sources */,
 				B4F32C9F2CE5FDB500DF82C9 /* ExpandableCategoriesTestCase.swift in Sources */,
 				B4F32CA22CE6003D00DF82C9 /* SearchMoviesViewControllerTests.swift in Sources */,
+				B4F32CA62CE6313100DF82C9 /* SearchViewModelTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
