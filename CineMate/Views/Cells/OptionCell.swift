@@ -36,12 +36,12 @@ class OptionCell: UITableViewCell {
         ])
     }
     
-    func setup(title: String, indentationLevel: Int, isExpanded: Bool) {
-        self.titleLabel.text = title
-        self.indentationLevel = indentationLevel
+    func setup(viewModel: OptionCellViewModel) {
+        self.titleLabel.text = viewModel.title
+        self.indentationLevel = viewModel.indentationLevel
         let imageView = UIImageView()
         imageView.frame = CGRect(x: 0, y: 0, width: 10, height: 10)
-        imageView.image = isExpanded ? UIImage(systemName: "chevron.down") : UIImage(systemName: "chevron.right")
+        imageView.image = viewModel.isExpanded ? UIImage(systemName: "chevron.down") : UIImage(systemName: "chevron.right")
         imageView.tintColor = .gray
         self.accessoryView = imageView
     }

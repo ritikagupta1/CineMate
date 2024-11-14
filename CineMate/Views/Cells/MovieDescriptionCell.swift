@@ -10,6 +10,8 @@ import UIKit
 class MovieDescriptionCell: UITableViewCell {
     static let identifier = "MovieDescriptionCell"
     
+   
+    
     private let posterImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
@@ -84,13 +86,12 @@ class MovieDescriptionCell: UITableViewCell {
         ])
     }
     
-    func configure(with movie: Movie) {
-        titleLabel.text = movie.title
-        yearLabel.text = "Year: \(movie.year)"
-        let languages = movie.language
-        languageLabel.text = "Language: \(languages)"
+    func configure(viewModel: MovieDescriptionCellViewModel) {
+        titleLabel.text = viewModel.title
+        yearLabel.text =  viewModel.year
+        languageLabel.text = viewModel.languages
         
-        NetworkManager.shared.downloadImage(from: movie.poster) { [weak self] image in
+        viewModel.networkManager.downloadImage(from: viewModel.poster) { [weak self] image in
             guard let self = self else {
                 return
             }

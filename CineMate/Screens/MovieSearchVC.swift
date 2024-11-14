@@ -107,17 +107,17 @@ extension MovieSearchVC: UITableViewDataSource, UITableViewDelegate {
         switch rowType {
         case .category(let title, let isExpanded):
             let cell = tableView.dequeueReusableCell(withIdentifier: OptionCell.identifier, for: indexPath) as? OptionCell
-            cell?.setup(title: title, indentationLevel: 0, isExpanded: isExpanded)
+            cell?.setup(viewModel: OptionCellViewModel(title: title, indentationLevel: 0, isExpanded: isExpanded))
             return cell ?? UITableViewCell()
         
         case .subcategory(let subcategory):
             let cell = tableView.dequeueReusableCell(withIdentifier: OptionCell.identifier, for: indexPath) as? OptionCell
-            cell?.setup(title: subcategory.title, indentationLevel: 1, isExpanded: subcategory.isExpanded)
+            cell?.setup(viewModel: OptionCellViewModel(title: subcategory.title, indentationLevel: 1, isExpanded: subcategory.isExpanded))
             return cell ?? UITableViewCell()
         
         case .movie(let movie):
             let cell = tableView.dequeueReusableCell(withIdentifier: MovieDescriptionCell.identifier, for: indexPath) as? MovieDescriptionCell
-            cell?.configure(with: movie)
+            cell?.configure(viewModel: MovieDescriptionCellViewModel(movie: movie))
             return cell ?? UITableViewCell()
         }
     }
