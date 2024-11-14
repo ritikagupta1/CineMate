@@ -9,7 +9,7 @@ import UIKit
 
 class OptionCell: UITableViewCell {
     static let identifier = "OptionCell"
-    var titleLabel: UILabel = UILabel()
+    private var titleLabel: UILabel = UILabel()
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -22,9 +22,12 @@ class OptionCell: UITableViewCell {
     
     private func configure() {
         self.backgroundColor = .clear
+        
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         titleLabel.font = UIFont(name: Constants.Fonts.gothicRegular, size: 18)
+        
         self.contentView.addSubview(titleLabel)
+        
         NSLayoutConstraint.activate([
             titleLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 10),
             titleLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -10),

@@ -25,6 +25,7 @@ protocol SearchViewModelProtocol: AnyObject {
 
 class SearchMoviesViewModel: SearchViewModelProtocol {
     private(set) var movies: [Movie]?
+    
     // Filtered Movies
     private var yearMovies: [String: [Movie]] = [:]
     private var actorMovies: [String: [Movie]] = [:]
@@ -38,7 +39,7 @@ class SearchMoviesViewModel: SearchViewModelProtocol {
     
     private(set) var currentSortOrder: Filters = .ascending
     
-    var isSearchActive: Bool = false
+    private var isSearchActive: Bool = false
     private var searchResults: [Movie] = []
     
     func loadMovies() {
@@ -162,7 +163,7 @@ class SearchMoviesViewModel: SearchViewModelProtocol {
         return isSearchActive ? searchResults.count : rows[section].count
     }
 
-    func updateRows() {
+    private func updateRows() {
         self.rows = categories.map { category in
             guard let movies = movies else {
                 print("Movies not present")
@@ -226,23 +227,21 @@ class SearchMoviesViewModel: SearchViewModelProtocol {
         }
         
         isSearchActive = !query.isEmpty
-        searchResults = movies.filter { movie in
-            movie.title.lowercased().contains(query.lowercased()) ||
-            movie.actorCollection.contains(where: { $0.lowercased().contains(query)}) ||
-            movie.directorCollection.contains(where: { $0.lowercased().contains(query)}) ||
-            movie.genreCollection.contains(where: { $0.lowercased().contains(query)})
-        }.sorted(by: { currentSortOrder == .ascending ? $0.title < $1.title : $0.title > $1.title })
+        if isSearchActive {
+            searchResults = movies.filter { movie in
+                movie.title.lowercased().contains(query.lowercased()) ||
+                movie.actorCollection.contains(where: { $0.lowercased().contains(query)}) ||
+                movie.directorCollection.contains(where: { $0.lowercased().contains(query)}) ||
+                movie.genreCollection.contains(where: { $0.lowercased().contains(query)})
+            }.sorted(by: { currentSortOrder == .ascending ? $0.title < $1.title : $0.title > $1.title })
+        } else {
+            searchResults = []
+        }
+        
     }
     
     func getRowType(for indexPath: IndexPath) -> RowType {
         isSearchActive ? RowType.movie(movie: searchResults[indexPath.row]) :
         rows[indexPath.section][indexPath.row]
     }
-}
-
-
-enum RowType {
-    case category(title: String, isExpanded: Bool)
-    case subcategory(subcategory: SubCategories)
-    case movie(movie: Movie)
 }

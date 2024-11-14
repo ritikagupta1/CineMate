@@ -1,8 +1,8 @@
 //
-//  RatingsView.swift
+//  RatingsViewUI.swift
 //  CineMate
 //
-//  Created by Ritika Gupta on 01/11/24.
+//  Created by Ritika Gupta on 14/11/24.
 //
 
 import SwiftUI
@@ -47,3 +47,4 @@ struct RatingViewUI: View {
 #Preview {
     RatingViewUI(rating: RatingDetails(title: "Rotten Tomato", percentage: 75)).preferredColorScheme(.dark)
 }
+

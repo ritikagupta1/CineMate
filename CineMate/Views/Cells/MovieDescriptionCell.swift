@@ -64,11 +64,13 @@ class MovieDescriptionCell: UITableViewCell {
     }
     
     private func setupViews() {
+        self.indentationLevel = 2
+        self.backgroundColor = .clear
+        self.accessoryView = nil
         contentView.addSubview(posterImageView)
         contentView.addSubview(detailsStack)
         
         NSLayoutConstraint.activate([
-            // Poster image constraints
             posterImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
                posterImageView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 12),
                posterImageView.heightAnchor.constraint(equalToConstant: 240),
@@ -83,9 +85,6 @@ class MovieDescriptionCell: UITableViewCell {
     }
     
     func configure(with movie: Movie) {
-        self.indentationLevel = 2
-        self.backgroundColor = .clear
-        self.accessoryView = nil
         titleLabel.text = movie.title
         yearLabel.text = "Year: \(movie.year)"
         let languages = movie.language

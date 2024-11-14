@@ -9,7 +9,7 @@ import UIKit
 class MovieSearchVC: UIViewController, UISearchBarDelegate {
     var viewModel: SearchMoviesViewModel
     
-    private var tableView: UITableView = {
+    var tableView: UITableView = {
         var tableView = UITableView()
         tableView.backgroundColor = .systemBackground
         tableView.register(MovieDescriptionCell.self, forCellReuseIdentifier: MovieDescriptionCell.identifier)
@@ -37,35 +37,27 @@ class MovieSearchVC: UIViewController, UISearchBarDelegate {
         super.viewDidLoad()
         viewModel.loadMovies()
         configureVC()
-        configureTableView()
+        configureTableViewAndSegmentControl()
         configureSearchController()
     }
     
     private func configureVC() {
         self.view.backgroundColor = .systemBackground
-        self.title = "Search Movies"
+        self.title = Constants.searchControllerTitle
     }
     
-    @objc func segmentControlClicked(_ sender: UISegmentedControl) {
-        let selectedIndex = sender.selectedSegmentIndex
-        if selectedIndex == 0 {
-            viewModel.sort(filter: .ascending)
-        } else {
-            viewModel.sort(filter: .descending)
-        }
+    private func configureTableViewAndSegmentControl() {
+        self.segmentControl.translatesAutoresizingMaskIntoConstraints = false
+        self.tableView.translatesAutoresizingMaskIntoConstraints = false
         
-        self.tableView.reloadData()
-    }
-    
-    private func configureTableView() {
-        segmentControl.addTarget(self, action: #selector(segmentControlClicked(_:)), for: .valueChanged)
+        self.view.addSubview(segmentControl)
+        self.view.addSubview(tableView)
+        
         self.tableView.backgroundColor = .systemBackground
         self.tableView.dataSource = self
         self.tableView.delegate = self
-        segmentControl.translatesAutoresizingMaskIntoConstraints = false
-        self.tableView.translatesAutoresizingMaskIntoConstraints = false
-        self.view.addSubview(segmentControl)
-        self.view.addSubview(tableView)
+        
+        segmentControl.addTarget(self, action: #selector(segmentControlClicked(_:)), for: .valueChanged)
         
         NSLayoutConstraint.activate([
             segmentControl.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor, constant: 10),
@@ -86,6 +78,18 @@ class MovieSearchVC: UIViewController, UISearchBarDelegate {
         searchController.searchBar.placeholder = Constants.searchBarPlaceHolder
         navigationItem.searchController = searchController
         navigationItem.hidesSearchBarWhenScrolling = false
+    }
+    
+    
+    @objc func segmentControlClicked(_ sender: UISegmentedControl) {
+        let selectedIndex = sender.selectedSegmentIndex
+        if selectedIndex == 0 {
+            viewModel.sort(filter: .ascending)
+        } else {
+            viewModel.sort(filter: .descending)
+        }
+        
+        self.tableView.reloadData()
     }
 }
 
@@ -149,10 +153,4 @@ extension MovieSearchVC: UISearchResultsUpdating {
         viewModel.updateSearchResults(with: query)
         self.tableView.reloadData()
     }
-}
-
-
-enum Filters: String {
-    case ascending = "Ascending"
-    case descending = "Descending"
 }

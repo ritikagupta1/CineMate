@@ -6,7 +6,8 @@
 //
 
 import Foundation
-// Used for our datasource of tableView
+// Used for the datasource of tableView
+
 class ExpandableCategories {
     let title: String
     var isExpanded: Bool
@@ -29,4 +30,15 @@ class SubCategories {
         self.isExpanded = isExpanded
         self.movies = movies
     }
+}
+
+enum RowType {
+    case category(title: String, isExpanded: Bool)
+    case subcategory(subcategory: SubCategories)
+    case movie(movie: Movie)
+}
+
+enum Filters: String {
+    case ascending = "Ascending"
+    case descending = "Descending"
 }
