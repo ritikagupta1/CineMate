@@ -58,6 +58,7 @@
 		B4F32CAB2CE758B900DF82C9 /* MovieDetailsViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieDetailsViewModelTests.swift; sourceTree = "<group>"; };
 		B4F32CAD2CE75ABF00DF82C9 /* RatingConvertor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RatingConvertor.swift; sourceTree = "<group>"; };
 		B4F32CAF2CE7648100DF82C9 /* RatingConverterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RatingConverterTests.swift; sourceTree = "<group>"; };
+		B4F32CB32CE7762300DF82C9 /* CineMate.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = CineMate.xctestplan; sourceTree = "<group>"; };
 		B4FAAD702CD0C60600355FFB /* CineMate.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CineMate.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B4FAAD732CD0C60600355FFB /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B4FAAD752CD0C60600355FFB /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -153,6 +154,7 @@
 		B4FAAD672CD0C60500355FFB = {
 			isa = PBXGroup;
 			children = (
+				B4F32CB32CE7762300DF82C9 /* CineMate.xctestplan */,
 				B4FAAD722CD0C60600355FFB /* CineMate */,
 				B4F32C942CE5E16500DF82C9 /* CineMateTests */,
 				B4FAAD712CD0C60600355FFB /* Products */,

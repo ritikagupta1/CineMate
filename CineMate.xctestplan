@@ -1,0 +1,28 @@
+{
+  "configurations" : [
+    {
+      "id" : "F0E11F44-73ED-4484-A83B-084813411D91",
+      "name" : "Test Scheme Action",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+    "targetForVariableExpansion" : {
+      "containerPath" : "container:CineMate.xcodeproj",
+      "identifier" : "B4FAAD6F2CD0C60600355FFB",
+      "name" : "CineMate"
+    }
+  },
+  "testTargets" : [
+    {
+      "target" : {
+        "containerPath" : "container:CineMate.xcodeproj",
+        "identifier" : "B4F32C922CE5E16500DF82C9",
+        "name" : "CineMateTests"
+      }
+    }
+  ],
+  "version" : 1
+}

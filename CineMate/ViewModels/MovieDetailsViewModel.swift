@@ -19,6 +19,7 @@ class NetworkAdapter {
         }
     }
 }
+
 class MovieDetailsViewModel {
     var title: String { movie.title }
     var releaseDate: String { movie.released }
