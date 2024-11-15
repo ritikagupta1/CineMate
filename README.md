@@ -23,14 +23,16 @@ Cinemate is an iOS application built using UIKit, that allows users to discover 
 ### Movie Details
 - **Comprehensive Information**:
   - Release Date
+  - Movie Poster
   - Genres
   - Plot Synopsis
   - Cast Members
+  - Language Support
   - Director(s)
   - Ratings from:
     - Internet Movie Database (IMDb)
     - Rotten Tomatoes
     - Metacritic
-    - Language Support
+    
 <img width="1152" alt="Screenshot 2024-11-04 at 12 12 20 AM" src="https://github.com/user-attachments/assets/cd6c458f-b32d-4319-9ce5-0bac454f6b64">
 
