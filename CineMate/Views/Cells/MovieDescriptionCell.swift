@@ -12,7 +12,7 @@ class MovieDescriptionCell: UITableViewCell {
     
     static let identifier = "MovieDescriptionCell"
     
-    private let posterImageView: UIImageView = {
+    let posterImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.contentMode = .scaleAspectFill
@@ -22,7 +22,7 @@ class MovieDescriptionCell: UITableViewCell {
         return imageView
     }()
     
-    private let titleLabel: UILabel = {
+    let titleLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = UIFont(name: Constants.Fonts.gothicBold, size: 22)
@@ -30,7 +30,7 @@ class MovieDescriptionCell: UITableViewCell {
         return label
     }()
     
-    private let yearLabel: UILabel = {
+    let yearLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = UIFont(name: Constants.Fonts.gothicRegular, size: 18)
@@ -38,7 +38,7 @@ class MovieDescriptionCell: UITableViewCell {
         return label
     }()
     
-    private let languageLabel: UILabel = {
+    let languageLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = UIFont(name: Constants.Fonts.gothicRegular, size: 16)
@@ -47,7 +47,7 @@ class MovieDescriptionCell: UITableViewCell {
         return label
     }()
     
-    private lazy var detailsStack: UIStackView = {
+    lazy var detailsStack: UIStackView = {
         let stack = UIStackView(arrangedSubviews: [titleLabel, yearLabel, languageLabel])
         stack.axis = .vertical
         stack.spacing = 10
