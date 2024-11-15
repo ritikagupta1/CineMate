@@ -8,11 +8,7 @@
 import XCTest
 @testable import CineMate
 
-import XCTest
-@testable import CineMate
-
 class SearchMoviesViewModelTests: XCTestCase {
-    
     func test_load_movies() {
         let sut = SearchMoviesViewModel()
         sut.loadMovies()
