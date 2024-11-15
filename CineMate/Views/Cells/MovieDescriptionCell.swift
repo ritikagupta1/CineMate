@@ -10,8 +10,6 @@ import UIKit
 class MovieDescriptionCell: UITableViewCell {
     static let identifier = "MovieDescriptionCell"
     
-   
-    
     private let posterImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false

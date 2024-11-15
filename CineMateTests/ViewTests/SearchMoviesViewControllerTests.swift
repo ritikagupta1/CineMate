@@ -70,30 +70,6 @@ final class SearchMoviesViewControllerTests: XCTestCase {
         XCTAssertEqual(searchController?.searchBar.placeholder, Constants.searchBarPlaceHolder)
     }
     
-    // MARK: - TableView DataSource Tests
-    
-    func test_NumberOfSections_CallsViewModel() {
-        var called = false
-        mockViewModel.numberOfSectionsHandler = {
-            called = true
-            return 1
-        }
-        
-        _ = sut.numberOfSections(in: sut.tableView)
-        XCTAssertTrue(called)
-    }
-    
-    func test_NumberOfRows_CallsViewModel() {
-        var called = false
-        mockViewModel.numberOfRowsHandler = { section in
-            called = true
-            return 1
-        }
-        
-        _ = sut.tableView(sut.tableView, numberOfRowsInSection: 0)
-        XCTAssertTrue(called)
-    }
-    
     // MARK: - Search Tests
     
     func test_SearchController_UpdatesResults() {
@@ -138,6 +114,71 @@ final class SearchMoviesViewControllerTests: XCTestCase {
     }
     
     
+    // MARK: - TableView DataSource Tests
+    
+    func test_NumberOfSections_CallsViewModel() {
+        var called = false
+        mockViewModel.numberOfSectionsHandler = {
+            called = true
+            return 1
+        }
+        
+        let result = sut.numberOfSections(in: sut.tableView)
+        XCTAssertTrue(called)
+        XCTAssertEqual(1, result)
+    }
+    
+    func test_NumberOfRows_CallsViewModel() {
+        var called = false
+        mockViewModel.numberOfRowsHandler = { section in
+            called = true
+            return 1
+        }
+        
+        let result  = sut.tableView(sut.tableView, numberOfRowsInSection: 0)
+        XCTAssertTrue(called)
+        XCTAssertEqual(1, result)
+    }
+    
+    func test_Cell_For_RowAt_For_Category_Cell() {
+        mockViewModel.rowType = .category(title: "Hello America", isExpanded: false)
+        let cell = sut.tableView(sut.tableView, cellForRowAt: IndexPath(row: 0, section: 0))
+        XCTAssert(cell is OptionCell)
+    }
+    
+    func test_Cell_For_RowAt_For_SubCategory_Cell() {
+        mockViewModel.rowType = .subcategory(subcategory: SubCategories(title: "Year", isExpanded: true, movies: [MoviesModelTests.createMockMovie()]))
+        let cell = sut.tableView(sut.tableView, cellForRowAt: IndexPath(row: 1, section: 0))
+        XCTAssert(cell is OptionCell)
+    }
+    
+    func test_Cell_For_RowAt_For_Movie_Cell() {
+        mockViewModel.rowType = .movie(movie: MoviesModelTests.createMockMovie())
+        let cell = sut.tableView(sut.tableView, cellForRowAt: IndexPath(row: 2, section: 0))
+        XCTAssert(cell is MovieDescriptionCell)
+    }
+    
+    func test_Option_Cell_selected() {
+        mockViewModel.rowType = .category(title: "Hello America", isExpanded: false)
+        var called = false
+        mockViewModel.toggleCategoryHandler = { _ in
+            called = true
+        }
+        
+        sut.tableView.delegate?.tableView?(sut.tableView, didSelectRowAt: IndexPath(row: 0, section: 0))
+        XCTAssertTrue(called)
+    }
+    
+    func test_Movie_Cell_selected() {
+        mockViewModel.rowType = .movie(movie: MoviesModelTests.createMockMovie())
+        var called = false
+        mockViewModel.toggleCategoryHandler = { _ in
+            called = true
+        }
+        
+        sut.tableView.delegate?.tableView?(sut.tableView, didSelectRowAt: IndexPath(row: 0, section: 0))
+        XCTAssertFalse(called)
+    }
 }
 // MARK: - Mock Implementation
 
