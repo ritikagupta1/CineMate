@@ -223,12 +223,3 @@ class MockSearchViewModel: SearchViewModelProtocol {
         return rowType
     }
 }
-
-
-class MockSearchViewModelDelegate: SearchViewModelDelegate {
-    var toggleSectionExpansionHandler: ((Int) -> Void)?
-    
-    func toggleSectionExpansion(at index: Int) {
-        toggleSectionExpansionHandler?(index)
-    }
-}

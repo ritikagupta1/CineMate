@@ -95,11 +95,20 @@ class SearchMoviesViewModelTests: XCTestCase {
     
     func test_ToggleCategory_UpdatesExpansionState() {
         let sut = SearchMoviesViewModel()
+        let mockDelegate = MockSearchViewModelDelegate()
+        var called = false
+        mockDelegate.toggleSectionExpansionHandler = { _ in 
+            called = true
+        }
+        sut.delegate = mockDelegate
+        
         sut.loadMovies()
+        
     
         sut.toggleCategory(indexPath: IndexPath(row: 0, section: 0))
 
         XCTAssertTrue(sut.categories[0].isExpanded)
+        XCTAssertTrue(called)
     }
     
     func test_ToggleSubCategory_UpdatesExpansionState() {
@@ -158,5 +167,14 @@ extension Movie: Comparable {
     
     public static func == (lhs: CineMate.Movie, rhs: CineMate.Movie) -> Bool {
         lhs.title == rhs.title
+    }
+}
+
+
+class MockSearchViewModelDelegate: SearchViewModelDelegate {
+    var toggleSectionExpansionHandler: ((Int) -> Void)?
+    
+    func toggleSectionExpansion(at index: Int) {
+        toggleSectionExpansionHandler?(index)
     }
 }
