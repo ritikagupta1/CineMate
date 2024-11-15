@@ -10,9 +10,10 @@ import XCTest
 
 class MoviesModelTests: XCTestCase {
     
-    func test_movie_model_initialisation() {
+    func test_movie_model_initialization() {
         // Given
         let movie = MoviesModelTests.createMockMovie()
+        
         // Then
         
         // Stored Properties
@@ -29,7 +30,7 @@ class MoviesModelTests: XCTestCase {
         XCTAssertEqual(movie.actorCollection.last, "Blythe Danner")
     }
     
-    func test_genreCollection_splitting() {
+    func test_genre_collection_splitting() {
         // Given
         let genres = MoviesModelTests.createMockMovie().genreCollection
         
@@ -40,7 +41,7 @@ class MoviesModelTests: XCTestCase {
         XCTAssertEqual(genres[2], "Action")
     }
     
-    func test_actorCollection_splitting() {
+    func test_actor_collection_splitting() {
         // Given
         let actors = MoviesModelTests.createMockMovie().actorCollection
         
@@ -52,7 +53,7 @@ class MoviesModelTests: XCTestCase {
         XCTAssertEqual(actors[3], "Blythe Danner")
     }
     
-    func test_directorCollection_splitting() {
+    func test_director_collection_splitting() {
         // Given
         let genres = MoviesModelTests.createMockMovie().directorCollection
         
@@ -61,7 +62,7 @@ class MoviesModelTests: XCTestCase {
         XCTAssertEqual(genres[0], "Jay Roach")
     }
     
-    func test_movies_JSON_Decoding_Success() throws {
+    func test_movies_JSON_decoding_Success() throws {
         // Given
         guard let fileURL = Bundle.main.url(forResource: "movies", withExtension: "json"),
               let json = try? Data(contentsOf: fileURL) else {
@@ -79,7 +80,7 @@ class MoviesModelTests: XCTestCase {
         XCTAssertEqual(movies.last?.title, "Review")
     }
     
-    func test_movies_JSON_Decoding_Failure() throws {
+    func test_movies_JSON_decoding_Failure() throws {
         // Given
         let invalidJSON = """
                 [ {

@@ -9,8 +9,20 @@ import XCTest
 @testable import CineMate
 
 class SearchMoviesViewModelTests: XCTestCase {
+    var sut: SearchMoviesViewModel!
+    
+    override func setUp() {
+        super.setUp()
+        sut = SearchMoviesViewModel()
+    }
+    
+    override func tearDown() {
+        sut = nil
+        super.tearDown()
+    }
+    
+    
     func test_load_movies() {
-        let sut = SearchMoviesViewModel()
         sut.loadMovies()
         
         XCTAssertNotNil(sut.movies)
@@ -21,7 +33,6 @@ class SearchMoviesViewModelTests: XCTestCase {
     }
     
     func test_sort_ascending_filter() {
-        let sut = SearchMoviesViewModel()
         sut.loadMovies()
         
         sut.sort(filter: .ascending)
@@ -37,7 +48,6 @@ class SearchMoviesViewModelTests: XCTestCase {
     }
     
     func test_sort_descending_filter() {
-        let sut = SearchMoviesViewModel()
         sut.loadMovies()
         
         sut.sort(filter: .descending)
@@ -53,7 +63,6 @@ class SearchMoviesViewModelTests: XCTestCase {
     }
     
     func test_number_of_sections() {
-        let sut = SearchMoviesViewModel()
         sut.loadMovies()
         sut.isSearchActive = false
         let sections = sut.numberOfSections()
@@ -61,7 +70,6 @@ class SearchMoviesViewModelTests: XCTestCase {
     }
     
     func test_number_of_sections_when_search_is_active() {
-        let sut = SearchMoviesViewModel()
         sut.loadMovies()
         sut.isSearchActive = true
         let sections = sut.numberOfSections()
@@ -69,7 +77,6 @@ class SearchMoviesViewModelTests: XCTestCase {
     }
     
     func test_UpdateSearchResults_With_Query_FiltersCorrectly() {
-        let sut = SearchMoviesViewModel()
         sut.loadMovies()
         
         sut.updateSearchResults(with: "america")
@@ -85,7 +92,6 @@ class SearchMoviesViewModelTests: XCTestCase {
     }
     
     func test_UpdateSearchResults_WithEmptyQuery_ClearsResults() {
-        let sut = SearchMoviesViewModel()
         sut.loadMovies()
         
         sut.updateSearchResults(with: "")
@@ -94,7 +100,6 @@ class SearchMoviesViewModelTests: XCTestCase {
     }
     
     func test_ToggleCategory_UpdatesExpansionState() {
-        let sut = SearchMoviesViewModel()
         let mockDelegate = MockSearchViewModelDelegate()
         var called = false
         mockDelegate.toggleSectionExpansionHandler = { _ in 
@@ -112,7 +117,6 @@ class SearchMoviesViewModelTests: XCTestCase {
     }
     
     func test_ToggleSubCategory_UpdatesExpansionState() {
-        let sut = SearchMoviesViewModel()
         sut.loadMovies()
     
         sut.toggleCategory(indexPath: IndexPath(row: 1, section: 0))
@@ -121,7 +125,6 @@ class SearchMoviesViewModelTests: XCTestCase {
     }
     
     func test_get_rowType() {
-        let sut = SearchMoviesViewModel()
         sut.loadMovies()
         sut.isSearchActive = false
         let rowType = sut.getRowType(for: IndexPath(row: 0, section: 0))
@@ -135,7 +138,6 @@ class SearchMoviesViewModelTests: XCTestCase {
     }
     
     func test_get_rowType_when_search_is_active() {
-        let sut = SearchMoviesViewModel()
         sut.loadMovies()
         sut.updateSearchResults(with: "america")
         

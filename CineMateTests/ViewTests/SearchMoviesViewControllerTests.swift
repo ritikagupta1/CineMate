@@ -26,28 +26,37 @@ final class SearchMoviesViewControllerTests: XCTestCase {
     }
     
     func test_VC_Init_Returns_Success() {
+        // Given
         sut.loadViewIfNeeded()
         
+        // Then
         XCTAssertNotNil(sut)
+        XCTAssertNotNil(sut.viewModel)
     }
     
     func test_ViewDidLoad_Configures_ViewModel() {
+        // Given
         sut.loadViewIfNeeded()
         
+        // Then
         XCTAssertNotNil(sut.viewModel)
         XCTAssertNotNil(sut.viewModel.delegate)
     }
     
     func test_Configure_View_Controller() {
+        // Given
         sut.loadViewIfNeeded()
         
+        // Then
         XCTAssertEqual(sut.view?.backgroundColor, UIColor.systemBackground)
         XCTAssertEqual(sut.title, Constants.searchControllerTitle)
     }
     
     func test_Configure_TableView() {
+        // Given
         sut.loadViewIfNeeded()
         
+        // Then
         XCTAssertNotNil(sut.tableView)
         XCTAssertNotNil(sut.tableView.delegate)
         XCTAssertNotNil(sut.tableView.dataSource)
@@ -55,16 +64,21 @@ final class SearchMoviesViewControllerTests: XCTestCase {
     }
     
     func test_Configure_SegmentControl() {
+        // Given
         sut.loadViewIfNeeded()
         let segmentControl = sut.segmentControl
         
+        // Then
         XCTAssertNotNil(segmentControl)
         XCTAssertEqual(segmentControl.numberOfSegments, 2)
         XCTAssertEqual(segmentControl.selectedSegmentIndex, 0)
     }
     
     func test_Configure_Search_Controller() {
+        // Given
         sut.loadViewIfNeeded()
+        
+        // Then
         let searchController = sut.navigationItem.searchController
         XCTAssertNotNil(searchController)
         XCTAssertEqual(searchController?.searchBar.placeholder, Constants.searchBarPlaceHolder)
@@ -73,22 +87,28 @@ final class SearchMoviesViewControllerTests: XCTestCase {
     // MARK: - Search Tests
     
     func test_SearchController_UpdatesResults() {
+        // Given
         var searchQuery: String?
         mockViewModel.updateSearchResultsHandler = { query in
             searchQuery = query
         }
         
+        // When
         let searchController = UISearchController()
         searchController.searchBar.text = "Test Query"
         sut.updateSearchResults(for: searchController)
         
+        // Then
         XCTAssertEqual(searchQuery, "Test Query")
     }
     
     // MARK: - Segment Control Tests
     
     func test_SegmentControl_SortsAscending() {
+        // Given
         var sortFilter: Filters?
+        
+        // When
         mockViewModel.sortHandler = { filter in
             sortFilter = filter
         }
@@ -97,11 +117,15 @@ final class SearchMoviesViewControllerTests: XCTestCase {
         segmentControl.selectedSegmentIndex = 0
         sut.segmentControlClicked(segmentControl)
         
+        // Then
         XCTAssertEqual(sortFilter, .ascending)
     }
     
     func test_SegmentControl_SortsDescending() {
+        // Given
         var sortFilter: Filters?
+        
+        // When
         mockViewModel.sortHandler = { filter in
             sortFilter = filter
         }
@@ -110,6 +134,7 @@ final class SearchMoviesViewControllerTests: XCTestCase {
         segmentControl.selectedSegmentIndex = 1
         sut.segmentControlClicked(segmentControl)
         
+        // Then
         XCTAssertEqual(sortFilter, .descending)
     }
     
@@ -117,70 +142,91 @@ final class SearchMoviesViewControllerTests: XCTestCase {
     // MARK: - TableView DataSource Tests
     
     func test_NumberOfSections_CallsViewModel() {
+        // Given
         var called = false
         mockViewModel.numberOfSectionsHandler = {
             called = true
             return 1
         }
         
+        // Then
         let result = sut.numberOfSections(in: sut.tableView)
         XCTAssertTrue(called)
         XCTAssertEqual(1, result)
     }
     
     func test_NumberOfRows_CallsViewModel() {
+        // Given
         var called = false
         mockViewModel.numberOfRowsHandler = { section in
             called = true
             return 1
         }
         
+        // Then
         let result  = sut.tableView(sut.tableView, numberOfRowsInSection: 0)
         XCTAssertTrue(called)
         XCTAssertEqual(1, result)
     }
     
     func test_Cell_For_RowAt_For_Category_Cell() {
+        // Given
         mockViewModel.rowType = .category(title: "Hello America", isExpanded: false)
         let cell = sut.tableView(sut.tableView, cellForRowAt: IndexPath(row: 0, section: 0))
+        
+        // Then
         XCTAssert(cell is OptionCell)
     }
     
     func test_Cell_For_RowAt_For_SubCategory_Cell() {
+        // Given
         mockViewModel.rowType = .subcategory(subcategory: SubCategories(title: "Year", isExpanded: true, movies: [MoviesModelTests.createMockMovie()]))
         let cell = sut.tableView(sut.tableView, cellForRowAt: IndexPath(row: 1, section: 0))
+        
+        // Then
         XCTAssert(cell is OptionCell)
     }
     
     func test_Cell_For_RowAt_For_Movie_Cell() {
+        // Given
         mockViewModel.rowType = .movie(movie: MoviesModelTests.createMockMovie())
         let cell = sut.tableView(sut.tableView, cellForRowAt: IndexPath(row: 2, section: 0))
+        
+        // Then
         XCTAssert(cell is MovieDescriptionCell)
     }
     
     func test_Option_Cell_selected() {
+        // Given
         mockViewModel.rowType = .category(title: "Hello America", isExpanded: false)
         var called = false
         mockViewModel.toggleCategoryHandler = { _ in
             called = true
         }
         
+        // When
         sut.tableView.delegate?.tableView?(sut.tableView, didSelectRowAt: IndexPath(row: 0, section: 0))
+        
+        // Then
         XCTAssertTrue(called)
     }
     
     func test_Movie_Cell_selected() {
+        // Given
         mockViewModel.rowType = .movie(movie: MoviesModelTests.createMockMovie())
         var called = false
         mockViewModel.toggleCategoryHandler = { _ in
             called = true
         }
         
+        // When
         sut.tableView.delegate?.tableView?(sut.tableView, didSelectRowAt: IndexPath(row: 0, section: 0))
+        
+        // Then
         XCTAssertFalse(called)
     }
 }
-// MARK: - Mock Implementation
+// MARK: - MockSearchViewModel
 
 class MockSearchViewModel: SearchViewModelProtocol {
     var delegate: SearchViewModelDelegate?

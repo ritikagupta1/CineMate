@@ -96,9 +96,7 @@ class MovieDescriptionCell: UITableViewCell {
                 return
             }
             
-            DispatchQueue.main.async {
-                self.posterImageView.image = image ?? .placeholder
-            }
+            self.posterImageView.image = image ?? .placeholder
         }
     }
     

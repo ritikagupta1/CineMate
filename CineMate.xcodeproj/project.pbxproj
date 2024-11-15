@@ -18,6 +18,7 @@
 		B4F32CAC2CE758B900DF82C9 /* MovieDetailsViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4F32CAB2CE758B900DF82C9 /* MovieDetailsViewModelTests.swift */; };
 		B4F32CAE2CE75ABF00DF82C9 /* RatingConvertor.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4F32CAD2CE75ABF00DF82C9 /* RatingConvertor.swift */; };
 		B4F32CB02CE7648100DF82C9 /* RatingConverterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4F32CAF2CE7648100DF82C9 /* RatingConverterTests.swift */; };
+		B4F32CB52CE776A500DF82C9 /* MovieDetailsViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4F32CB42CE776A500DF82C9 /* MovieDetailsViewControllerTests.swift */; };
 		B4FAAD742CD0C60600355FFB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4FAAD732CD0C60600355FFB /* AppDelegate.swift */; };
 		B4FAAD762CD0C60600355FFB /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4FAAD752CD0C60600355FFB /* SceneDelegate.swift */; };
 		B4FAAD782CD0C60600355FFB /* MovieSearchVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4FAAD772CD0C60600355FFB /* MovieSearchVC.swift */; };
@@ -59,6 +60,7 @@
 		B4F32CAD2CE75ABF00DF82C9 /* RatingConvertor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RatingConvertor.swift; sourceTree = "<group>"; };
 		B4F32CAF2CE7648100DF82C9 /* RatingConverterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RatingConverterTests.swift; sourceTree = "<group>"; };
 		B4F32CB32CE7762300DF82C9 /* CineMate.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = CineMate.xctestplan; sourceTree = "<group>"; };
+		B4F32CB42CE776A500DF82C9 /* MovieDetailsViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieDetailsViewControllerTests.swift; sourceTree = "<group>"; };
 		B4FAAD702CD0C60600355FFB /* CineMate.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CineMate.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B4FAAD732CD0C60600355FFB /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B4FAAD752CD0C60600355FFB /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -130,6 +132,7 @@
 			isa = PBXGroup;
 			children = (
 				B4F32CA12CE6003D00DF82C9 /* SearchMoviesViewControllerTests.swift */,
+				B4F32CB42CE776A500DF82C9 /* MovieDetailsViewControllerTests.swift */,
 			);
 			path = ViewTests;
 			sourceTree = "<group>";
@@ -360,6 +363,7 @@
 				B4F32CB02CE7648100DF82C9 /* RatingConverterTests.swift in Sources */,
 				B4F32CAC2CE758B900DF82C9 /* MovieDetailsViewModelTests.swift in Sources */,
 				B4F32CA62CE6313100DF82C9 /* SearchViewModelTests.swift in Sources */,
+				B4F32CB52CE776A500DF82C9 /* MovieDetailsViewControllerTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

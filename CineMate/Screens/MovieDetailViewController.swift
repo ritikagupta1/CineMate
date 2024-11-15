@@ -9,19 +9,19 @@ import UIKit
 import SwiftUI
 
 class MovieDetailViewController: UIViewController {
-    private let scrollView: UIScrollView = {
+    let scrollView: UIScrollView = {
         let scrollView = UIScrollView()
         scrollView.translatesAutoresizingMaskIntoConstraints = false
         return scrollView
     }()
     
-    private let contentView: UIView = {
+    let contentView: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
     
-    private let posterImageView: UIImageView = {
+    let posterImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.contentMode = .scaleAspectFill
@@ -32,7 +32,7 @@ class MovieDetailViewController: UIViewController {
         return imageView
     }()
     
-    private let titleLabel: UILabel = {
+    let titleLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = .systemFont(ofSize: 24, weight: .bold)
@@ -41,7 +41,7 @@ class MovieDetailViewController: UIViewController {
         return label
     }()
     
-    private let releaseDateTitleLabel: UILabel = {
+    let releaseDateTitleLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.text = Constants.releaseDate
@@ -49,7 +49,7 @@ class MovieDetailViewController: UIViewController {
         return label
     }()
     
-    private let releaseDateLabel: UILabel = {
+   let releaseDateLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = .systemFont(ofSize: 16)
@@ -57,7 +57,7 @@ class MovieDetailViewController: UIViewController {
         return label
     }()
     
-    private let genresTitleLabel: UILabel = {
+    let genresTitleLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.text = Constants.genres
@@ -65,7 +65,7 @@ class MovieDetailViewController: UIViewController {
         return label
     }()
     
-    private let genresLabel: UILabel = {
+    let genresLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = .systemFont(ofSize: 16)
@@ -73,7 +73,7 @@ class MovieDetailViewController: UIViewController {
         return label
     }()
     
-    private let plotTitleLabel: UILabel = {
+    let plotTitleLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.text = Constants.plot
@@ -81,7 +81,7 @@ class MovieDetailViewController: UIViewController {
         return label
     }()
     
-    private let plotLabel: UILabel = {
+    let plotLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = .systemFont(ofSize: 16)
@@ -89,7 +89,7 @@ class MovieDetailViewController: UIViewController {
         return label
     }()
     
-    private let castTitleLabel: UILabel = {
+    let castTitleLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.text = Constants.cast
@@ -97,7 +97,7 @@ class MovieDetailViewController: UIViewController {
         return label
     }()
     
-    private let castLabel: UILabel = {
+    let castLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = .systemFont(ofSize: 16)
@@ -105,7 +105,7 @@ class MovieDetailViewController: UIViewController {
         return label
     }()
     
-    private let directorsTitleLabel: UILabel = {
+    let directorsTitleLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.text = Constants.director
@@ -113,7 +113,7 @@ class MovieDetailViewController: UIViewController {
         return label
     }()
     
-    private let directorsLabel: UILabel = {
+    let directorsLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = .systemFont(ofSize: 16)
@@ -121,7 +121,7 @@ class MovieDetailViewController: UIViewController {
         return label
     }()
     
-    private let ratingStack: UIStackView = {
+    let ratingStack: UIStackView = {
         let stackView = UIStackView()
         stackView.axis = .vertical
         stackView.spacing = 10
@@ -129,7 +129,7 @@ class MovieDetailViewController: UIViewController {
         return stackView
     }()
     
-    private let ratingVStack: UIStackView = {
+    let ratingVStack: UIStackView = {
         let stackView = UIStackView()
         stackView.axis = .vertical
         stackView.spacing = 15
@@ -137,7 +137,7 @@ class MovieDetailViewController: UIViewController {
         return stackView
     }()
     
-    private let ratingsTitleLabel: UILabel = {
+    let ratingsTitleLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.text = Constants.ratings
@@ -145,9 +145,9 @@ class MovieDetailViewController: UIViewController {
         return label
     }()
 
-    var viewModel: MovieDetailsViewModel
+    var viewModel: MovieDetailsViewModelProtocol
     
-    init(viewModel: MovieDetailsViewModel) {
+    init(viewModel: MovieDetailsViewModelProtocol) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }

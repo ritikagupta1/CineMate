@@ -20,7 +20,20 @@ class NetworkAdapter {
     }
 }
 
-class MovieDetailsViewModel {
+protocol MovieDetailsViewModelProtocol {
+    var title: String { get }
+    var releaseDate: String { get }
+    var genres: String { get }
+    var plot: String { get }
+    var cast: String { get }
+    var directors: String { get }
+    var posterURL: String { get }
+    
+    func getRatingDetails() -> [RatingDetails]
+    func loadImage(completion: @escaping (UIImage?) -> Void)
+}
+
+class MovieDetailsViewModel: MovieDetailsViewModelProtocol {
     var title: String { movie.title }
     var releaseDate: String { movie.released }
     var genres: String { movie.genre }
@@ -28,8 +41,6 @@ class MovieDetailsViewModel {
     var cast: String { movie.actors }
     var directors: String { movie.director }
     var posterURL: String { movie.poster }
-    
-    
     
     var ratingConvertor = RatingConverter()
     var downloadImage: DownloadImage = NetworkAdapter.downloadImage
