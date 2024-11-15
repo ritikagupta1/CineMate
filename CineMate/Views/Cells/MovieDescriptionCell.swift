@@ -8,6 +8,8 @@
 import UIKit
 
 class MovieDescriptionCell: UITableViewCell {
+    typealias DownloadImage = (String,@escaping (UIImage?) -> Void) -> Void
+    
     static let identifier = "MovieDescriptionCell"
     
     private let posterImageView: UIImageView = {
@@ -89,7 +91,7 @@ class MovieDescriptionCell: UITableViewCell {
         yearLabel.text =  viewModel.year
         languageLabel.text = viewModel.languages
         
-        viewModel.networkManager.downloadImage(from: viewModel.poster) { [weak self] image in
+        viewModel.downloadImage(viewModel.poster) { [weak self] image in
             guard let self = self else {
                 return
             }

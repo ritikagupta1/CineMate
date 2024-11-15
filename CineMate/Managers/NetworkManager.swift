@@ -7,11 +7,7 @@
 
 import UIKit
 
-protocol NetworkManagerProtocol: AnyObject {
-    func downloadImage(from urlString: String, completion: @escaping (UIImage?) -> Void)
-}
-
-final class NetworkManager: NetworkManagerProtocol {
+final class NetworkManager {
     static let shared = NetworkManager()
     let imageCache = NSCache<NSString, UIImage>()
     

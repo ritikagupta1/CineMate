@@ -9,11 +9,10 @@ import Foundation
 
 class MovieDescriptionCellViewModel {
     var movie: Movie
-    var networkManager: NetworkManagerProtocol
+    var downloadImage: DownloadImage = NetworkAdapter.downloadImage
     
-    init(movie: Movie, networkManager: NetworkManagerProtocol = NetworkManager.shared) {
+    init(movie: Movie) {
         self.movie = movie
-        self.networkManager = networkManager
     }
     
     var title: String {

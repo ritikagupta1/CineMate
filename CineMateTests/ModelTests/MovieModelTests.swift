@@ -133,9 +133,9 @@ extension MoviesModelTests {
             director: "Jay Roach",
             writer: "Greg Glienna, Mary Ruth Clarke, Greg Glienna (story), Mary Ruth Clarke (story), Jim Herzfeld (screenplay), John Hamburg (screenplay)",
             actors: "Robert De Niro, Ben Stiller, Teri Polo, Blythe Danner",
-            plot: "A Jewish male nurse plans to ask his live-in girl friend to marry him. However, he learns that her strict father expects to be asked for his daughter's hand before she can accept. Thus begins the visit from Hell as the two travel to meet Mom and Dad, who turns out to be former CIA with a lie detector in the basement. Coincidentally, a sister also has announced her wedding to a young doctor. Of course everything that can go wrong, does, including the disappearance of Dad's beloved Himalayan cat, Jinxie.",
+            plot: "A Jewish male nurse plans",
             language: "English, Thai, Spanish, Hebrew, French",
-            poster: "https://m.media-amazon.com/images/M/MV5BMGNlMGZiMmUtZjU0NC00MWU4LWI0YTgtYzdlNGVhZGU4NWZlXkEyXkFqcGdeQXVyNjU0OTQ0OTY@._V1_SX300.jpg",
+            poster: "https://m.media-amazon.com/images",
             ratings: [
                 Rating(source: "Internet Movie Database", value: "7.0/10"),
                 Rating(source: "Rotten Tomatoes", value: "84%"),
