@@ -7,7 +7,7 @@
 
 import Foundation
 
-class OptionCellViewModel {
+class OptionCellModel {
     let title: String
     let indentationLevel: Int
     let isExpanded: Bool

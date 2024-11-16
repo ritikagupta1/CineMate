@@ -44,15 +44,4 @@ final class MovieDetailsViewModelTests: XCTestCase {
         XCTAssertEqual(ratings[2].title, "Metacritic")
         XCTAssertEqual(ratings[2].percentage, 73.0)
     }
-    
-    func test_image_download_returns_success() {
-        let expectedImage: UIImage = .placeholder
-        sut.downloadImage = { urlString, completion in
-            completion(expectedImage)
-        }
-        
-        sut.loadImage { image in
-            XCTAssertEqual(image, expectedImage)
-        }
-    }
 }

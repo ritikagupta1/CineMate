@@ -34,9 +34,9 @@ final class MovieDescriptionCellTests: XCTestCase {
     
     
     func test_movie_description_cell_configuration() {
-        let viewModel = MovieDescriptionCellViewModel(movie: MoviesModelTests.createMockMovie())
+        let viewModel = MovieDescriptionCellModel(movie: MoviesModelTests.createMockMovie())
         
-        viewModel.downloadImage = { urlString, completion in
+        sut.downloadImage = { urlString, completion in
             completion(.placeholder)
         }
         

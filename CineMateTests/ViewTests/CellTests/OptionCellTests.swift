@@ -27,7 +27,7 @@ final class OptionCellTests: XCTestCase {
     }
     
     func test_option_cell_configuration() {
-        let viewModel = OptionCellViewModel(title: "Test Title", indentationLevel: 1, isExpanded: true)
+        let viewModel = OptionCellModel(title: "Test Title", indentationLevel: 1, isExpanded: true)
         sut.setup(viewModel: viewModel)
         
         XCTAssertEqual(sut.titleLabel.text, "Test Title")

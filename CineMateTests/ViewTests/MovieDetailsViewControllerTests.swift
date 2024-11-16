@@ -16,9 +16,7 @@ class MovieDetailViewControllerTests: XCTestCase {
         super.setUp()
         // Create mock movie data
         mockViewModel = MockMovieDetailsViewModel()
-        
         sut = MovieDetailViewController(viewModel: mockViewModel)
-        sut.loadViewIfNeeded()
     }
     
     override func tearDown() {
@@ -50,10 +48,14 @@ class MovieDetailViewControllerTests: XCTestCase {
     
     func test_configure_UI() {
         // Given
+        var expectedURL: String = ""
+        sut.downloadImage = { posterURL, completion in
+            expectedURL = posterURL
+            completion(.placeholder)
+        }
         sut.loadViewIfNeeded()
         
         // Then
-        mockViewModel.expectedImage = .placeholder
         XCTAssertEqual(sut.titleLabel.text, mockViewModel.title)
         XCTAssertEqual(sut.releaseDateLabel.text, mockViewModel.releaseDate)
         XCTAssertEqual(sut.genresLabel.text, mockViewModel.genres)
@@ -61,6 +63,7 @@ class MovieDetailViewControllerTests: XCTestCase {
         XCTAssertEqual(sut.castLabel.text, mockViewModel.cast)
         XCTAssertEqual(sut.directorsLabel.text, mockViewModel.directors)
         XCTAssertEqual(sut.castLabel.text, mockViewModel.cast)
+        XCTAssertEqual(expectedURL, mockViewModel.posterURL)
         XCTAssertEqual(sut.posterImageView.image, .placeholder)
     }
     
@@ -79,8 +82,6 @@ class MovieDetailViewControllerTests: XCTestCase {
 // MARK: MockMovieDetailsViewModel
 
 class MockMovieDetailsViewModel: MovieDetailsViewModelProtocol {
-    var expectedImage: UIImage?
-    
     var title: String {
         return "Hello Mister"
     }
@@ -116,9 +117,5 @@ class MockMovieDetailsViewModel: MovieDetailsViewModelProtocol {
          RatingDetails(title: "Rotten Tomatoes", percentage: 70.0),
          RatingDetails(title: "Rotten Tomatoes", percentage: 70.0)
         ]
-    }
-    
-    func loadImage(completion: @escaping (UIImage?) -> Void) {
-        completion(expectedImage)
     }
 }

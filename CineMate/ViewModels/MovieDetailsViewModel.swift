@@ -6,19 +6,6 @@
 //
 
 import Foundation
-import UIKit
-
-typealias DownloadImage = (String,@escaping (UIImage?) -> Void) -> Void
-
-class NetworkAdapter {
-    static func downloadImage(from urlString: String, completion: @escaping (UIImage?) -> Void) {
-        NetworkManager.shared.downloadImage(from: urlString) { image in
-            DispatchQueue.main.async {
-                completion(image)
-            }
-        }
-    }
-}
 
 protocol MovieDetailsViewModelProtocol {
     var title: String { get }
@@ -30,7 +17,6 @@ protocol MovieDetailsViewModelProtocol {
     var posterURL: String { get }
     
     func getRatingDetails() -> [RatingDetails]
-    func loadImage(completion: @escaping (UIImage?) -> Void)
 }
 
 class MovieDetailsViewModel: MovieDetailsViewModelProtocol {
@@ -43,7 +29,7 @@ class MovieDetailsViewModel: MovieDetailsViewModelProtocol {
     var posterURL: String { movie.poster }
     
     var ratingConvertor = RatingConverter()
-    var downloadImage: DownloadImage = NetworkAdapter.downloadImage
+   
     
     private var movie: Movie
     
@@ -56,10 +42,10 @@ class MovieDetailsViewModel: MovieDetailsViewModelProtocol {
             RatingDetails(title: rating.source, percentage: RatingConverter.convertRatingToPercentage(ratingString: rating.value) )
         }
     }
-    
-    func loadImage(completion: @escaping (UIImage?) -> Void) {
-        self.downloadImage(posterURL) { image in
-            completion(image ?? .placeholder)
-        }
-    }
+//    
+//    func loadImage(completion: @escaping (UIImage?) -> Void) {
+//        self.downloadImage(posterURL) { image in
+//            completion(image ?? .placeholder)
+//        }
+//    }
 }

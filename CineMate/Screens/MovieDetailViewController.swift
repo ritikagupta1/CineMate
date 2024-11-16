@@ -146,6 +146,7 @@ class MovieDetailViewController: UIViewController {
     }()
 
     var viewModel: MovieDetailsViewModelProtocol
+    var downloadImage: DownloadImage = NetworkAdapter.downloadImage
     
     init(viewModel: MovieDetailsViewModelProtocol) {
         self.viewModel = viewModel
@@ -279,7 +280,7 @@ class MovieDetailViewController: UIViewController {
         plotLabel.text = viewModel.plot
         castLabel.text = viewModel.cast
         directorsLabel.text = viewModel.directors
-        viewModel.loadImage { [weak self] image in
+        self.downloadImage(viewModel.posterURL) { [weak self] image in
             self?.posterImageView.image = image ?? .placeholder
         }
         
@@ -330,6 +331,18 @@ class MovieDetailViewController: UIViewController {
                 hstack.addArrangedSubview(rating)
             }
             ratingVStack.addArrangedSubview(hstack)
+        }
+    }
+}
+
+typealias DownloadImage = (String,@escaping (UIImage?) -> Void) -> Void
+
+class NetworkAdapter {
+    static func downloadImage(from urlString: String, completion: @escaping (UIImage?) -> Void) {
+        NetworkManager.shared.downloadImage(from: urlString) { image in
+            DispatchQueue.main.async {
+                completion(image)
+            }
         }
     }
 }

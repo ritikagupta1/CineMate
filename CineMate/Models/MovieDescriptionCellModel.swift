@@ -7,9 +7,8 @@
 
 import Foundation
 
-class MovieDescriptionCellViewModel {
+class MovieDescriptionCellModel {
     var movie: Movie
-    var downloadImage: DownloadImage = NetworkAdapter.downloadImage
     
     init(movie: Movie) {
         self.movie = movie

@@ -36,7 +36,7 @@ class OptionCell: UITableViewCell {
         ])
     }
     
-    func setup(viewModel: OptionCellViewModel) {
+    func setup(viewModel: OptionCellModel) {
         self.titleLabel.text = viewModel.title
         self.indentationLevel = viewModel.indentationLevel
         let imageView = UIImageView()

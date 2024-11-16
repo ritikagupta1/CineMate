@@ -8,9 +8,9 @@
 import XCTest
 @testable import CineMate
 
-final class OptionCellViewModelTests: XCTestCase {
+final class OptionCellModelTests: XCTestCase {
     func test_option_cell_init() {
-        let viewModel = OptionCellViewModel(title: "Test Title", indentationLevel: 1, isExpanded: true)
+        let viewModel = OptionCellModel(title: "Test Title", indentationLevel: 1, isExpanded: true)
         
         XCTAssertEqual(viewModel.title, "Test Title")
         XCTAssertEqual(viewModel.indentationLevel, 1)
