@@ -6,13 +6,8 @@
 //
 
 import Foundation
-protocol SearchViewModelDelegate: AnyObject {
-    func toggleSectionExpansion(at index: Int)
-}
 
 protocol SearchViewModelProtocol: AnyObject {
-    var delegate: SearchViewModelDelegate? {get set}
-    
     func loadMovies()
     func numberOfSections() -> Int
     func numberOfRowsInSection(_ section: Int) -> Int
@@ -20,6 +15,8 @@ protocol SearchViewModelProtocol: AnyObject {
     func updateSearchResults(with query: String)
     func sort(filter: Filters)
     func getRowType(for indexPath: IndexPath) -> RowType
+    
+    var toggleSectionExpansion:  ((Int) -> Void)? {get set}
 }
 
 
@@ -33,9 +30,10 @@ class SearchMoviesViewModel: SearchViewModelProtocol {
     private var genreMovies: [String: [Movie]] = [:]
     
     private(set) var categories: [ExpandableCategories] = []
-    private(set) var rows: [[RowType]] = []
+    private(set) var sectionDataSource: [[RowType]] = []
     
-    weak var delegate: SearchViewModelDelegate?
+    var toggleSectionExpansion: ((Int) -> Void)?
+   
     
     private(set) var currentSortOrder: Filters = .ascending
     
@@ -46,7 +44,7 @@ class SearchMoviesViewModel: SearchViewModelProtocol {
         // Load movies from json file in the bundle
         let decoder = JSONDecoder()
         
-        guard let fileURL = Bundle.main.url(forResource: "movies", withExtension: "json"),
+        guard let fileURL = Bundle.main.url(forResource: Constants.fileName, withExtension: Constants.fileExtension),
               let data = try? Data(contentsOf: fileURL),
               let movies = try? decoder.decode([Movie].self, from: data) else {
             print("Error loading movie data from json file")
@@ -104,67 +102,75 @@ class SearchMoviesViewModel: SearchViewModelProtocol {
     }
     
     private func configureDataSource() {
-        self.categories = MovieCategories.allCases.map({ category in
-            var options: [SubCategories] = []
+        self.categories = MovieCategories.allCases.map { category in
+            let options: [SubCategories]
+            
             switch category {
             case .year:
-                options = yearMovies.map({
-                    SubCategories(title: $0.key, isExpanded: false, movies: $0.value.sorted(by: { $0.title < $1.title }))
-                }).sorted(by: { $0.title < $1.title })
+                options = mapAndSort(yearMovies)
             case .genre:
-                options = genreMovies.map({
-                    SubCategories(title: $0.key, isExpanded: false, movies: $0.value.sorted(by: { $0.title < $1.title }))
-                }).sorted(by: { $0.title < $1.title })
+                options = mapAndSort(genreMovies)
             case .director:
-                options = directorMovies.map({
-                    SubCategories(title: $0.key, isExpanded: false, movies: $0.value.sorted(by: { $0.title < $1.title }))
-                }).sorted(by: { $0.title < $1.title })
+                options = mapAndSort(directorMovies)
             case .actor:
-                options = actorMovies.map({
-                    SubCategories(title: $0.key, isExpanded: false, movies: $0.value.sorted(by: { $0.title < $1.title }))
-                }).sorted(by: { $0.title < $1.title })
+                options = mapAndSort(actorMovies)
             case .all:
                 self.movies = self.movies?.sorted(by: { $0.title < $1.title })
+                options = []
             }
+            
             return ExpandableCategories(title: category.title, isExpanded: false, subCategories: options)
-        })
+        }
+    }
+
+    private func mapAndSort(_ movies: [String: [Movie]]) -> [SubCategories] {
+        movies.map {
+            SubCategories(
+                title: $0.key,
+                isExpanded: false,
+                movies: $0.value.sorted(by: { $0.title < $1.title })
+            )
+        }.sorted(by: { $0.title < $1.title })
     }
     
     func sort(filter: Filters) {
         guard filter != currentSortOrder || !categories.isEmpty else { return }
         self.currentSortOrder = filter
+        
+        let sortComparator: (String, String) -> Bool = filter == .ascending ? (<) : (>)
+        
+        // Sort categories and subcategories
         self.categories = self.categories.map { category in
-            category.subCategories = category.subCategories.sorted(by: { filter == .ascending ? $0.title < $1.title : $0.title > $1.title
-            })
-            for subCategory in category.subCategories {
-                subCategory.movies = subCategory.movies.sorted(by: { filter == .ascending ? $0.title < $1.title : $0.title > $1.title
-                })
-            }
+            category.subCategories = category.subCategories.map { subCategory in
+                subCategory.movies = subCategory.movies.sorted(by: { sortComparator($0.title, $1.title) })
+                return subCategory
+            }.sorted(by: { sortComparator($0.title, $1.title) })
             return category
         }
-        self.movies = self.movies?.sorted(by: { filter == .ascending ? $0.title < $1.title : $0.title > $1.title
-        })
-        self.searchResults = self.searchResults.sorted(by: { filter == .ascending ? $0.title < $1.title : $0.title > $1.title
-        })
+        
+        // Sort main movies and search results
+        self.movies = self.movies?.sorted(by: { sortComparator($0.title, $1.title) })
+        self.searchResults = self.searchResults.sorted(by: { sortComparator($0.title, $1.title) })
+        
         self.updateRows()
     }
     
     func initialiseRows() {
-        self.rows = categories.map { category in
+        self.sectionDataSource = categories.map { category in
             [.category(title: category.title, isExpanded: category.isExpanded)]
         }
     }
     
     func numberOfSections() -> Int {
-        isSearchActive ? 1 : rows.count
+        isSearchActive ? 1 : sectionDataSource.count
     }
     
     func numberOfRowsInSection(_ section: Int) -> Int {
-        return isSearchActive ? searchResults.count : rows[section].count
+        return isSearchActive ? searchResults.count : sectionDataSource[section].count
     }
 
     private func updateRows() {
-        self.rows = categories.map { category in
+        self.sectionDataSource = categories.map { category in
             guard let movies = movies else {
                 print("Movies not present")
                 return []
@@ -202,7 +208,7 @@ class SearchMoviesViewModel: SearchViewModelProtocol {
         if indexPath.row == 0 {
             category.isExpanded.toggle()
             self.updateRows()
-            delegate?.toggleSectionExpansion(at: indexPath.section)
+            self.toggleSectionExpansion?( indexPath.section)
         }
         var currentRow = 1
         
@@ -210,7 +216,7 @@ class SearchMoviesViewModel: SearchViewModelProtocol {
             if currentRow == indexPath.row {
                 subcategory.isExpanded.toggle()
                 self.updateRows()
-                delegate?.toggleSectionExpansion(at: indexPath.section)
+                self.toggleSectionExpansion?(indexPath.section)
             }
             currentRow += 1
             
@@ -242,6 +248,6 @@ class SearchMoviesViewModel: SearchViewModelProtocol {
     
     func getRowType(for indexPath: IndexPath) -> RowType {
         isSearchActive ? RowType.movie(movie: searchResults[indexPath.row]) :
-        rows[indexPath.section][indexPath.row]
+        sectionDataSource[indexPath.section][indexPath.row]
     }
 }

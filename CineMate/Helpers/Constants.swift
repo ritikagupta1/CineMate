@@ -20,6 +20,9 @@ enum Constants {
     static let genre = "Genre"
     static let actor = "Actor"
     static let allMovies = "All Movies"
+    
+    static let fileName = "movies"
+    static let fileExtension = "json"
    
     enum Fonts {
         static let gothicRegular = "AppleSDGothicNeo-Regular"

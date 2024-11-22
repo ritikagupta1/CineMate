@@ -26,7 +26,9 @@ class MovieSearchVC: UIViewController, UISearchBarDelegate {
     init(viewModel: SearchViewModelProtocol) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
-        viewModel.delegate = self
+        viewModel.toggleSectionExpansion = { index in
+            self.tableView.reloadSections(IndexSet(integer: index), with: .automatic)
+        }
     }
     
     required init?(coder: NSCoder) {
@@ -136,12 +138,6 @@ extension MovieSearchVC: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         UITableView.automaticDimension
-    }
-}
-
-extension MovieSearchVC: SearchViewModelDelegate {
-    func toggleSectionExpansion(at index: Int) {
-        self.tableView.reloadSections(IndexSet(integer: index), with: .automatic)
     }
 }
 
