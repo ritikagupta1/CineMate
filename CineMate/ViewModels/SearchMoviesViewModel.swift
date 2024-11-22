@@ -7,17 +7,39 @@
 
 import Foundation
 
-protocol SearchViewModelProtocol: AnyObject {
+protocol MovieLoadable: AnyObject {
     func loadMovies()
+}
+
+protocol SectionCountable: AnyObject {
     func numberOfSections() -> Int
     func numberOfRowsInSection(_ section: Int) -> Int
-    func toggleCategory(indexPath: IndexPath)
-    func updateSearchResults(with query: String)
-    func sort(filter: Filters)
-    func getRowType(for indexPath: IndexPath) -> RowType
-    
-    var toggleSectionExpansion:  ((Int) -> Void)? {get set}
 }
+
+protocol Expandable: AnyObject {
+    func toggleCategory(indexPath: IndexPath)
+    var toggleSectionExpansion: ((Int) -> Void)? { get set }
+}
+
+protocol Searchable: AnyObject {
+    func updateSearchResults(with query: String)
+}
+
+protocol Sortable: AnyObject {
+    func sort(filter: Filters)
+}
+
+protocol RowTypeGetter: AnyObject {
+    func getRowType(for indexPath: IndexPath) -> RowType
+}
+
+protocol SearchViewModelProtocol:
+    MovieLoadable,
+    SectionCountable,
+    Expandable,
+    Searchable,
+    Sortable,
+    RowTypeGetter {}
 
 
 class SearchMoviesViewModel: SearchViewModelProtocol {
