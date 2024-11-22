@@ -7,7 +7,8 @@
 
 import Foundation
 
-protocol MovieDetailsViewModelProtocol {
+// Protocol for Content details
+protocol ContentDataProvider {
     var title: String { get }
     var releaseDate: String { get }
     var genres: String { get }
@@ -15,37 +16,36 @@ protocol MovieDetailsViewModelProtocol {
     var cast: String { get }
     var directors: String { get }
     var posterURL: String { get }
-    
+}
+
+// Protocol for Ratings
+protocol RatingProvider {
     func getRatingDetails() -> [RatingDetails]
 }
 
-class MovieDetailsViewModel: MovieDetailsViewModelProtocol {
-    var title: String { movie.title }
-    var releaseDate: String { movie.released }
-    var genres: String { movie.genre }
-    var plot: String { movie.plot }
-    var cast: String { movie.actors }
-    var directors: String { movie.director }
-    var posterURL: String { movie.poster }
+// Combined Protocol for View Model
+protocol  ContentDetailViewModelProtocol: ContentDataProvider, RatingProvider {}
+
+class ContentDetailViewModel: ContentDetailViewModelProtocol {
+    var title: String { content.title }
+    var releaseDate: String { content.released }
+    var genres: String { content.genre }
+    var plot: String { content.plot }
+    var cast: String { content.actors }
+    var directors: String { content.director }
+    var posterURL: String { content.poster }
     
-    var ratingConvertor = RatingConverter()
+    
+    private var ratingsDetailsProvider: RatingDetailsProvider
    
+    private let content: ContentProvider
     
-    private var movie: Movie
-    
-    init(movie: Movie) {
-        self.movie = movie
+    init(content: ContentProvider, ratingsDetailsProvider: RatingDetailsProvider = DefaultRatingDetailsProvider()) {
+        self.content = content
+        self.ratingsDetailsProvider = ratingsDetailsProvider
     }
 
     func getRatingDetails() -> [RatingDetails] {
-        return movie.ratings.map { rating in
-            RatingDetails(title: rating.source, percentage: RatingConverter.convertRatingToPercentage(ratingString: rating.value) )
-        }
+        return content.ratings.map(ratingsDetailsProvider.convertToDetails)
     }
-//    
-//    func loadImage(completion: @escaping (UIImage?) -> Void) {
-//        self.downloadImage(posterURL) { image in
-//            completion(image ?? .placeholder)
-//        }
-//    }
 }

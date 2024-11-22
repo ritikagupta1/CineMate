@@ -145,10 +145,10 @@ class MovieDetailViewController: UIViewController {
         return label
     }()
 
-    var viewModel: MovieDetailsViewModelProtocol
+    var viewModel: ContentDetailViewModelProtocol
     var downloadImage: DownloadImage = NetworkAdapter.downloadImage
     
-    init(viewModel: MovieDetailsViewModelProtocol) {
+    init(viewModel: ContentDetailViewModelProtocol) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }

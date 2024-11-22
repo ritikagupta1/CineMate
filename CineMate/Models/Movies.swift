@@ -57,3 +57,16 @@ struct Rating: Codable {
         case value = "Value"
     }
 }
+
+protocol ContentProvider {
+    var title: String { get }
+    var released: String { get }
+    var genre: String { get }
+    var plot: String { get }
+    var actors: String { get }
+    var director: String { get }
+    var poster: String { get }
+    var ratings: [Rating] { get }
+}
+
+extension Movie: ContentProvider {}

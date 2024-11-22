@@ -129,7 +129,7 @@ extension MovieSearchVC: UITableViewDataSource, UITableViewDelegate {
         case .category, .subcategory :
             self.viewModel.toggleCategory(indexPath: indexPath)
         case .movie(let movie):
-            let detailVC = MovieDetailViewController(viewModel: MovieDetailsViewModel(movie: movie))
+            let detailVC = MovieDetailViewController(viewModel: ContentDetailViewModel(content: movie))
             self.navigationController?.pushViewController(detailVC, animated: true)
         }
     }

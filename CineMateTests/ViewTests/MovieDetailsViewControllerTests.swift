@@ -81,7 +81,7 @@ class MovieDetailViewControllerTests: XCTestCase {
 
 // MARK: MockMovieDetailsViewModel
 
-class MockMovieDetailsViewModel: MovieDetailsViewModelProtocol {
+class MockMovieDetailsViewModel: ContentDetailViewModelProtocol {
     var title: String {
         return "Hello Mister"
     }

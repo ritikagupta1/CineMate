@@ -6,9 +6,15 @@
 //
 
 import Foundation
+protocol RatingConverter {
+    /// Converts a rating string to a percentage value
+    /// Returns 0.0 if conversion fails
+    func convertRatingToPercentage(ratingString: String) -> Double
+}
 
-class RatingConverter {
-    static func convertRatingToPercentage(ratingString: String) -> Double {
+struct DefaultRatingConverter: RatingConverter {
+    // default implementation
+    func convertRatingToPercentage(ratingString: String) -> Double {
         if ratingString.contains("/") {
             let components = ratingString.components(separatedBy: "/")
             if let rating = Double(components[0]),
@@ -21,6 +27,8 @@ class RatingConverter {
                 return percentage
             }
         }
+        
+        // Return 0.0 for invalid cases
         return 0.0
     }
 }

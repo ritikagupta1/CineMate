@@ -9,12 +9,12 @@ import XCTest
 @testable import CineMate
 
 final class MovieDetailsViewModelTests: XCTestCase {
-    var sut: MovieDetailsViewModel!
+    var sut: ContentDetailViewModel!
     
     override func setUp() {
         super.setUp()
-        sut = MovieDetailsViewModel(
-            movie: MoviesModelTests.createMockMovie()
+        sut = ContentDetailViewModel(
+            content: MoviesModelTests.createMockMovie() 
         )
     }
     
